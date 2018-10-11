@@ -1,0 +1,9 @@
+﻿  draw.cpp
+d:\workplace\openglpractice\practiceone\practiceone\draw.cpp(197): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+d:\workplace\openglpractice\practiceone\practiceone\draw.cpp(198): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+  shader.cpp
+  正在生成代码...
+  正在跳过...(未检测到相关更改)
+  window.cpp
+  practiceOne.vcxproj -> D:\workplace\openGLPractice\practiceOne\Debug\practiceOne.exe
+  practiceOne.vcxproj -> D:\workplace\openGLPractice\practiceOne\Debug\practiceOne.pdb (Partial PDB)
