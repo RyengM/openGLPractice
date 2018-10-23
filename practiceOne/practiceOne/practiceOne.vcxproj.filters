@@ -16,18 +16,21 @@
     <Filter Include="资源文件\着色器">
       <UniqueIdentifier>{f958171e-c5e4-4d8c-a171-2ae7f58a432d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="资源文件\cuda">
+      <UniqueIdentifier>{6e26f2cb-72ef-464e-89a4-df3cf4db5edd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="draw.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="..\sourceFiles\window.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\sourceFiles\glad.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\sourceFiles\shader.cpp">
+    <ClCompile Include="..\sourceFiles\cube.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sourceFiles\wakeFlame.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,16 +41,42 @@
     <None Include="..\assets\shaders\triangle.frag">
       <Filter>资源文件\着色器</Filter>
     </None>
+    <None Include="..\assets\shaders\wakeFlame.frag">
+      <Filter>资源文件\着色器</Filter>
+    </None>
+    <None Include="..\assets\shaders\wakeFlame.vert">
+      <Filter>资源文件\着色器</Filter>
+    </None>
+    <None Include="..\assets\cuda\wakeFlame.cuh">
+      <Filter>资源文件\cuda</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\myTools\draw.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\myTools\camera.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\include\myTools\shader.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\myTools\wakeFlame.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\myTools\stb_image.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\myTools\cube.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\myTools\cudaUtility.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\myTools\currentWakeFlameData.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="..\assets\cuda\wakeFlame.cu">
+      <Filter>资源文件\cuda</Filter>
+    </CudaCompile>
   </ItemGroup>
 </Project>

@@ -1,8 +1,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <myTools/draw.h>
 #include <myTools/camera.h>
+#include <myTools/wakeFlame.h>
+#include <myTools/cube.h>
 #include <iostream>
 
 using namespace std;
@@ -12,11 +12,11 @@ void processInput(GLFWwindow *window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
-// settings
+//Screen settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
-//定义相机
+//Camera settings
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
@@ -27,14 +27,14 @@ float lastFrame = 0.f;
 float deltaFrame = 0.f;
 
 int main() {
-	//初始化GLFW
+	//initialize GLFW
 	glfwInit();
-	//设置主版本号和次版本号，并设定模式为核心模式
+	//set main major/minor version and profile
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	//创建窗口对象
+	//create window object
 	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
 	if (window == NULL) {
 		std::cout << "Failed to create GLFW window" << std::endl;
@@ -43,16 +43,16 @@ int main() {
 	}
 	glfwMakeContextCurrent(window);
 
-	//初始化GLAD
+	//initialize GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return -1;
 	}
 
-	//设置渲染尺寸大小，参数分别为左上角坐标(x,y)和width、height
+	//set render size，parameter: x,y,width,height
 	glViewport(0, 0, 800, 600);
 
-	//注册回调函数
+	//register callback function
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
@@ -60,48 +60,53 @@ int main() {
 	// tell GLFW to capture our mouse
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-	drawMethod triangleMethod = drawMethod("../assets/shaders/triangle.vert", "../assets/shaders/triangle.frag");
-	triangleMethod.drawTriangleHandler();
+	//object instantiation
+	drawWakeFlameMethod wakeFlame;
+	wakeFlame.initialize();
+	//drawCubeMethod cube;
+	//cube.drawCubeHandler();
 
-	//检查程序是否被要求退出
+	//program exit detection
 	while (!glfwWindowShouldClose(window)) {
-		//定义帧率，用于视角移动
+		//set frame rate for camera movement
 		currentFrame = glfwGetTime();
 		deltaFrame = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
 		processInput(window);
 
-		//渲染指令
-		//设置背景颜色（r,g,b,a)
+		//set background, parameter: r,g,b,a
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		//将屏幕颜色还原为背景颜色
+		//clear screen color as background color
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		//进行绘制
-		triangleMethod.useGLDraw(camera);
-		//采集VBO数据并绘制
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		wakeFlame.update();
 
-		//双缓冲消除闪烁
+		//start rendering
+		wakeFlame.useGLDraw(camera);
+
+		//cube.useGLDraw(camera);
+
+		//glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		//double buffering
 		glfwSwapBuffers(window);
-		//检查是否又触发事件
+		//event trigger detection
 		glfwPollEvents();
 	}
 
-	//关闭GLFW
+	//terminate GLFW
 	glfwTerminate();
 
 	return 0;
 }
 
-//设置回调函数，用于窗口大小改变处理
+//callback for window size adjustment
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
 
-//输入处理
+//input process
 void processInput(GLFWwindow *window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -118,7 +123,6 @@ void processInput(GLFWwindow *window)
 }
 
 // glfw: whenever the mouse moves, this callback is called
-// -------------------------------------------------------
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
 	if (firstMouse)
@@ -138,7 +142,6 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 }
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
-// ----------------------------------------------------------------------
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	camera.ProcessMouseScroll(yoffset);
