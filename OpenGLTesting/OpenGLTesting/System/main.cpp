@@ -5,7 +5,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     //initialize main window, including OPENGL and main scene
-    OpenGLTesting launch =  new OpenGLTesting(false);
+    OpenGLTesting launch = OpenGLTesting();
     launch.initializeOpenGL();
     launch.initializeScene();
     return a.exec();

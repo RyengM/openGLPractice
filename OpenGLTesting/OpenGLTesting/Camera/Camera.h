@@ -31,7 +31,8 @@ public:
     float yaw;
     float pitch;
 
-    Camera(glm::vec3 Target);
+    Camera();
+    Camera(int id);
     //to get the current view
     glm::mat4 getViewMatrix();
 

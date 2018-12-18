@@ -30,11 +30,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>$(SolutionDir)include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)include;$(SolutionDir)3rdparty\spdlog\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>$(SolutionDir)include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)include;$(SolutionDir)3rdparty\spdlog\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
     <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
@@ -71,7 +71,7 @@
     <QtMoc>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
-      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</IncludePath>
+      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets</IncludePath>
       <Define>UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB</Define>
     </QtMoc>
     <QtUic>
@@ -102,7 +102,7 @@
     <QtMoc>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
-      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</IncludePath>
+      <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets</IncludePath>
       <Define>UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB</Define>
     </QtMoc>
     <QtUic>
@@ -115,31 +115,37 @@
     </QtRcc>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Cameras.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="mainScene.cpp" />
-    <ClCompile Include="OpenGLTesting.cpp" />
-    <ClCompile Include="Quad.cpp" />
+    <ClCompile Include="Camera\Camera.cpp" />
+    <ClCompile Include="Camera\Cameras.cpp" />
+    <ClCompile Include="Plugin\Logger.cpp" />
+    <ClCompile Include="Shader\ObjectRenderModule.cpp" />
+    <ClCompile Include="Shader\ShaderObject.cpp" />
+    <ClCompile Include="System\main.cpp" />
+    <ClCompile Include="System\mainScene.cpp" />
+    <ClCompile Include="System\OpenGLTesting.cpp" />
+    <ClCompile Include="Targets\Quad.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="OpenGLTesting.h" />
+    <ClInclude Include="Camera\Camera.h" />
+    <ClInclude Include="Camera\Cameras.h" />
+    <ClInclude Include="Plugin\Logger.hpp" />
+    <ClInclude Include="Shader\ObjectRenderModule.h" />
+    <ClInclude Include="Shader\ShaderObject.h" />
+    <ClInclude Include="System\mainScene.h" />
+    <ClInclude Include="System\System.h" />
+    <ClInclude Include="Targets\Quad.h" />
+    <QtMoc Include="System\OpenGLTesting.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="OpenGLTesting.ui" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtRcc Include="OpenGLTesting.qrc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Cameras.h" />
-    <ClInclude Include="mainScene.h" />
-    <ClInclude Include="Quad.h" />
-    <ClInclude Include="System.h" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="..\assets\shaders\quad.frag" />
+    <None Include="..\assets\shaders\quad.vert" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="FormFiles\OpenGLTesting.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="ResourceFiles\OpenGLTesting.qrc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

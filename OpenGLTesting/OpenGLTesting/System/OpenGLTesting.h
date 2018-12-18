@@ -14,7 +14,7 @@ class OpenGLTesting : public QOpenGLWidget
     Q_OBJECT
 
 public:
-    OpenGLTesting(bool fullScreen);
+    OpenGLTesting();
 
     void initializeOpenGL();
     void resizeGL(int width, int height);
@@ -24,7 +24,7 @@ public:
     void keyPressEvent(QKeyEvent *e);
 
 private:
-    bool fullScreen;
+    bool fullScreen = false;
 
     Ui::OpenGLTestingClass ui;
 };

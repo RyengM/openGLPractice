@@ -2,7 +2,7 @@
 #include "mainScene.h"
 #include "QKeyEvent"
 
-OpenGLTesting::OpenGLTesting(bool fullScreen)
+OpenGLTesting::OpenGLTesting()
 {
     setWindowTitle(QStringLiteral("单一模组测试平台"));
     if (fullScreen)
@@ -41,22 +41,6 @@ void OpenGLTesting::resizeGL(int width, int height)
 
 void OpenGLTesting::keyPressEvent(QKeyEvent *e)
 {
-    switch (e->key())
-    {
-    case Qt::Key_F2:
-        fullScreen = !fullScreen;
-        if (fullScreen)
-        {
-            showFullScreen();
-        }
-        else
-        {
-            showNormal();
-            setGeometry(0, 0, 640, 480);
-        }
-        update();
-        break;
-    case Qt::Key_Escape:
+    if (e->key() == Qt::Key_Escape)
         close();
-    }
 }
