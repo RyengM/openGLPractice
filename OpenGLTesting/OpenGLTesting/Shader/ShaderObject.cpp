@@ -91,6 +91,26 @@ void ShaderObject::build(const std::string& vertex_shader_file, const std::strin
     glDeleteShader(fragment_shader);
 }
 
+char const* ShaderObject::getVertexInfo(const std::string& filename)
+{
+    std::string vertex_code;
+    std::ifstream vertex_stream(filename, std::ios::in);
+    if (vertex_stream.is_open())
+    {
+        std::string line;
+        while (getline(vertex_stream, line))
+            vertex_code += "\n" + line;
+        vertex_stream.close();
+    }
+    else
+    {
+        Logger::error("cannot open vertex file {}", filename);
+        exit(EXIT_FAILURE);
+    }
+    char const* vertex_source = vertex_code.c_str();
+    return vertex_source;
+}
+
 void ShaderObject::set_bool(const std::string& name, bool value)
 {
     glUniform1i(glGetUniformLocation(program_, name.c_str()), int(value));

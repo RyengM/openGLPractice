@@ -11,6 +11,7 @@ class MainScene: public QGraphicsScene
 public:
     MainScene();
     void drawAxis();
+    void renderQuad();
 
 protected:
     /*void mousePressEvent(QGraphicsSceneMouseEvent* event) override;

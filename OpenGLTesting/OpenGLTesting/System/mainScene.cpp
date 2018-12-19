@@ -35,3 +35,9 @@ void MainScene::drawAxis()
 //    }
 //    glEnd();
 }
+
+// we show target object in mainScene directly now, and it will be managed by a certain module afterwards
+void MainScene::renderQuad()
+{
+
+}

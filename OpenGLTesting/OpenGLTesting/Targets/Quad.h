@@ -2,6 +2,7 @@
 #define _QUAD_
 
 #include <glm/glm.hpp>
+#include <Shader/ShaderObject.h>
 
 class Quad
 {
@@ -14,8 +15,11 @@ public:
     Quad();
 
     void build_render_config();
+    void render();
 
 private:
+    char const* vertexInfo;
+    ShaderObject quadObject = ShaderObject();
     GLuint shader_program_;
     GLuint vao_;
     GLuint vbo_;
