@@ -1,12 +1,21 @@
 #include "OpenGLTesting.h"
-#include "mainScene.h"
 #include "QKeyEvent"
 
 OpenGLTesting::OpenGLTesting()
 {
+
+}
+
+OpenGLTesting::OpenGLTesting(bool fullScreen)
+{
     setWindowTitle(QStringLiteral("单一模组测试平台"));
     if (fullScreen)
         showFullScreen();
+}
+
+OpenGLTesting::~OpenGLTesting()
+{
+    delete mainScene;
 }
 
 void OpenGLTesting::initializeOpenGL()
@@ -21,8 +30,9 @@ void OpenGLTesting::initializeOpenGL()
 
 void OpenGLTesting::initializeScene()
 {
-    MainScene *mainScene = new MainScene();
+    mainScene = new MainScene();
     mainScene->drawAxis();
+    //mainScene->renderQuad();
 }
 
 void OpenGLTesting::resizeGL(int width, int height)

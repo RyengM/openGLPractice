@@ -3,8 +3,10 @@
 
 #include <glm/glm.hpp>
 #include <Shader/ShaderObject.h>
+#include <Camera/Camera.h>
+#include <QOpenGLExtraFunctions>
 
-class Quad
+class Quad : protected QOpenGLExtraFunctions
 {
 public:
     //basic parameters

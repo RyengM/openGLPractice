@@ -3,6 +3,7 @@
 
 #include <GL/glew.h>
 #include <QOpenglWidget.h>
+#include "mainScene.h"
 #include "ui_OpenGLTesting.h"
 
 /*
@@ -15,6 +16,9 @@ class OpenGLTesting : public QOpenGLWidget
 
 public:
     OpenGLTesting();
+    OpenGLTesting(bool fullScreen);
+
+    ~OpenGLTesting();
 
     void initializeOpenGL();
     void resizeGL(int width, int height);
@@ -24,8 +28,8 @@ public:
     void keyPressEvent(QKeyEvent *e);
 
 private:
-    bool fullScreen = false;
-
+    bool fullScreen;
+    MainScene *mainScene;
     Ui::OpenGLTestingClass ui;
 };
 
