@@ -1,8 +1,21 @@
-#include <System/mainScene.h>
 #include <GL/glew.h>
+#include <System/mainScene.h>
 #include <Targets/Quad.h>
+#include <Plugin/Logger.hpp>
 
-MainScene::MainScene()
+MainScene::MainScene(QGLWidget *opengl_widget) : opengl_widget_(opengl_widget)
+{
+    Logger::info("initializing GLEW library...");
+    GLenum result = glewInit();
+    if (result != GLEW_OK)
+    {
+        Logger::error("failed to initialize GLEW library, {}", glewGetErrorString(result));
+        assert(result == GLEW_OK);
+    }
+    Logger::info("initializing GLEW successfully, using GLEW {}", glewGetString(GLEW_VERSION));
+}
+
+void MainScene::initialize()
 {
 
 }

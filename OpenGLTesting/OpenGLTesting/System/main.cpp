@@ -1,12 +1,11 @@
-#include "OpenGLTesting.h"
 #include <QtWidgets/QApplication>
+#include "mainView.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     //initialize main window, including OPENGL and main scene
-    OpenGLTesting launch(false);
-    launch.initializeOpenGL();
-    launch.initializeScene();
+    MainView *mainView = new MainView();
+    mainView->show_up();
     return a.exec();
 }

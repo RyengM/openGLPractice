@@ -49,9 +49,6 @@
     <ClCompile Include="System\mainScene.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="System\OpenGLTesting.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="Targets\Quad.cpp">
       <Filter>Targets</Filter>
     </ClCompile>
@@ -63,6 +60,9 @@
     </ClCompile>
     <ClCompile Include="Shader\ObjectRenderModule.cpp">
       <Filter>Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="System\mainView.cpp">
+      <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -111,7 +111,7 @@
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="System\OpenGLTesting.h">
+    <QtMoc Include="System\mainView.h">
       <Filter>System</Filter>
     </QtMoc>
   </ItemGroup>

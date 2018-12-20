@@ -1,15 +1,21 @@
 #ifndef _MAINSCENE_
 #define _MAINSCENE_
 
+#include <QGL.h>
 #include <QGraphicsScene.h>
 
 /*
-    mainScene, used for basic view and operation
+    provide a surface for managing widgets and items
 */
 class MainScene: public QGraphicsScene
 {
 public:
-    MainScene();
+    MainScene(QGLWidget *opengl_widget);
+    ~MainScene();
+
+    void initialize();
+
+
     void drawAxis();
     void renderQuad();
 
@@ -20,7 +26,7 @@ protected:
     void wheelEvent(QGraphicsSceneWheelEvent* event) override;*/
 
 private:
-
+    QGLWidget* opengl_widget_ = nullptr;
 };
 
 #endif
