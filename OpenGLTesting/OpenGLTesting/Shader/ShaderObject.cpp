@@ -1,6 +1,6 @@
 #include "ShaderObject.h"
-#include "Plugin/Logger.hpp"
 
+#include <iostream>
 #include <fstream>
 #include <sstream>
 
@@ -33,7 +33,7 @@ void ShaderObject::build(const std::string& vertex_shader_file, const std::strin
     }
     else
     {
-        Logger::error("cannot open vertex shader file {}", vertex_shader_file);
+        std::cout << "cannot open vertex shader file " << vertex_shader_file << std::endl;
         exit(EXIT_FAILURE);
     }
     char const* vertex_source_ptr = vertex_shader_code.c_str();
@@ -44,7 +44,7 @@ void ShaderObject::build(const std::string& vertex_shader_file, const std::strin
     if (success == 0)
     {
         glGetShaderInfoLog(vertex_shader, 512, nullptr, info_log);
-        Logger::error("vertex shader compilation failed, {}", info_log);
+        std::cout << "vertex shader compilation failed, " << info_log <<std::endl;
     }
 
     // fragment shader
@@ -61,7 +61,7 @@ void ShaderObject::build(const std::string& vertex_shader_file, const std::strin
     }
     else
     {
-        Logger::error("cannot open fragment shader file {}", vertex_shader_file);
+        std::cout << "cannot open fragment shader file " << vertex_shader_file << std::endl;
         exit(EXIT_FAILURE);
     }
     char const* fragment_source_ptr = fragment_shader_code.c_str();
@@ -72,7 +72,7 @@ void ShaderObject::build(const std::string& vertex_shader_file, const std::strin
     if (success == 0)
     {
         glGetShaderInfoLog(fragment_shader, 512, nullptr, info_log);
-        Logger::error("fragment shader compilation failed, {}", info_log);
+        std::cout << "fragment shader compilation failed, " << info_log << std::endl;
     }
 
     // link program
@@ -85,7 +85,7 @@ void ShaderObject::build(const std::string& vertex_shader_file, const std::strin
     if (success == 0)
     {
         glGetProgramInfoLog(program_, 512, nullptr, info_log);
-        Logger::error("program linking failed, {}", info_log);
+        std::cout << "program linking failed, " << info_log << std::endl;
     }
     glDeleteShader(vertex_shader);
     glDeleteShader(fragment_shader);
@@ -104,7 +104,7 @@ char const* ShaderObject::getVertexInfo(const std::string& filename)
     }
     else
     {
-        Logger::error("cannot open vertex file {}", filename);
+        std::cout << "cannot open vertex file {}" << filename << std::endl;
         exit(EXIT_FAILURE);
     }
     char const* vertex_source = vertex_code.c_str();

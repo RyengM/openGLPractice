@@ -2,7 +2,7 @@
 #define  _MAIN_VIEW
 
 #include <QGraphicsView.h>
-#include <QGL.h>
+#include <QOpenglWidget.h>
 
 #include <System/mainScene.h>
 
@@ -26,7 +26,7 @@ protected:
 
 private:
     MainScene *main_scene_;
-    QGLWidget *main_widget_;
+    QOpenGLWidget *main_widget_;
 };
 
 

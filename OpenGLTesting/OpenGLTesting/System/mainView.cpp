@@ -1,6 +1,6 @@
 #include <QScreen.h>
 #include <QtGui/QEvent.h>
-#include <qguiapplication.h>
+#include <QGuiApplication.h>
 
 #include "mainView.h"
 
@@ -10,7 +10,7 @@ MainView::MainView()
     setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 
     //main widget for loading OPENGL items
-    main_widget_ = new QGLWidget(QGLFormat(QGL::SampleBuffers));
+    main_widget_ = new QOpenGLWidget();
     main_widget_->makeCurrent();
     setViewport(main_widget_);
     //viewport will never be updated when secene is changed, user is expected to controll all updates

@@ -1,7 +1,7 @@
 #ifndef _MAINSCENE_
 #define _MAINSCENE_
 
-#include <QGL.h>
+#include <QOpenglWidget.h>
 #include <QGraphicsScene.h>
 
 /*
@@ -10,7 +10,7 @@
 class MainScene: public QGraphicsScene
 {
 public:
-    MainScene(QGLWidget *opengl_widget);
+    MainScene(QOpenGLWidget *opengl_widget);
     ~MainScene();
 
     void initialize();
@@ -26,7 +26,7 @@ protected:
     void wheelEvent(QGraphicsSceneWheelEvent* event) override;*/
 
 private:
-    QGLWidget* opengl_widget_ = nullptr;
+    QOpenGLWidget* opengl_widget_ = nullptr;
 };
 
 #endif

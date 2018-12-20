@@ -6,7 +6,6 @@
 MainScene::MainScene(QOpenGLWidget *opengl_widget) : opengl_widget_(opengl_widget)
 {
     std::cout << "initializing GLEW library..." <<std::endl;
-    //glewInit will retern 1 if failed to initialize GLEW library
     GLenum result = glewInit();
     if (result != GLEW_OK)
     {

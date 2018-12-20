@@ -32,9 +32,6 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{56cb286d-e0f0-40fd-8fa9-db7433159812}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Plugin">
-      <UniqueIdentifier>{115eb847-f1e3-46f6-81ae-6e17befbad9d}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera\Camera.cpp">
@@ -54,9 +51,6 @@
     </ClCompile>
     <ClCompile Include="Shader\ShaderObject.cpp">
       <Filter>Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="Plugin\Logger.cpp">
-      <Filter>Plugin</Filter>
     </ClCompile>
     <ClCompile Include="Shader\ObjectRenderModule.cpp">
       <Filter>Shader</Filter>
@@ -83,9 +77,6 @@
     </ClInclude>
     <ClInclude Include="Shader\ShaderObject.h">
       <Filter>Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="Plugin\Logger.hpp">
-      <Filter>Plugin</Filter>
     </ClInclude>
     <ClInclude Include="Shader\ObjectRenderModule.h">
       <Filter>Shader</Filter>
