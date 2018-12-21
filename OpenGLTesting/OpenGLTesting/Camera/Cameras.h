@@ -1,5 +1,5 @@
-#ifndef _CAMERA_
-#define _CAMERA_
+#ifndef CAMERAS_H
+#define CAMERAS_H
 
 #include <Camera/Camera.h>
 #include <unordered_map>

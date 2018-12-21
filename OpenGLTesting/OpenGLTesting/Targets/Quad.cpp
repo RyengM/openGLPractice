@@ -10,6 +10,7 @@ Quad::Quad()
 {
     camera = Camera(id);
     //bind a camera and initialize it
+    build_render_config();
 }
 
 void Quad::build_render_config()

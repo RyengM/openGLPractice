@@ -58,6 +58,9 @@
     <ClCompile Include="System\mainView.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="System\TargetScene.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera\Camera.h">
@@ -80,6 +83,9 @@
     </ClInclude>
     <ClInclude Include="Shader\ObjectRenderModule.h">
       <Filter>Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="System\TargetScene.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

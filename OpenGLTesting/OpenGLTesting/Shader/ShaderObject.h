@@ -1,5 +1,5 @@
-#ifndef _SHADER_OBJECT_
-#define _SHADER_OBJECT_
+#ifndef SHADER_OBJECT_H
+#define SHADER_OBJECT_H
 
 #include <string>
 #include <glm/glm.hpp>

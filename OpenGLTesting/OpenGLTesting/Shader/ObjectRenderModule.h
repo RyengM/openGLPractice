@@ -1,5 +1,5 @@
-#ifndef _OBJECT_RENDER_MODULE_
-#define _OBJECT_RENDER_MODULE_
+#ifndef OBJECT_RENDER_MODULE_H
+#define OBJECT_RENDER_MODULE_H
 
 #include "ShaderObject.h"
 

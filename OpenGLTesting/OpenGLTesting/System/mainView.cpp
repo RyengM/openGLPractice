@@ -1,6 +1,7 @@
 #include <QScreen.h>
 #include <QtGui/QEvent.h>
 #include <QGuiApplication.h>
+#include <QGL.h>
 
 #include "mainView.h"
 

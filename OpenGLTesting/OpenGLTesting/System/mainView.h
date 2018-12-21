@@ -1,5 +1,5 @@
-#ifndef  _MAIN_VIEW_
-#define  _MAIN_VIEW
+#ifndef  MAIN_VIEW_H
+#define  MAIN_VIEW_H
 
 #include <QGraphicsView.h>
 #include <QOpenglWidget.h>

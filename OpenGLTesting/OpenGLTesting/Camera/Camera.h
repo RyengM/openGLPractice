@@ -1,5 +1,5 @@
-#ifndef _CAMERA_
-#define _CAMERA_
+#ifndef CAMERA_H
+#define CAMERA_H
 
 #include <glm/glm.hpp>
 
@@ -31,7 +31,6 @@ public:
     float yaw;
     float pitch;
 
-    Camera();
     Camera(int id);
     //to get the current view
     glm::mat4 getViewMatrix();

@@ -1,9 +1,6 @@
 #include "Camera.h"
 #include "glm/gtc/matrix_transform.hpp"
 
-
-Camera::Camera() {}
-
 // Constructor with vectors
 Camera::Camera(int id)
 {

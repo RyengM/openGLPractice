@@ -123,6 +123,7 @@
     <ClCompile Include="System\main.cpp" />
     <ClCompile Include="System\mainScene.cpp" />
     <ClCompile Include="System\mainView.cpp" />
+    <ClCompile Include="System\TargetScene.cpp" />
     <ClCompile Include="Targets\Quad.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +134,7 @@
     <ClInclude Include="System\mainScene.h" />
     <QtMoc Include="System\mainView.h" />
     <ClInclude Include="System\System.h" />
+    <ClInclude Include="System\TargetScene.h" />
     <ClInclude Include="Targets\Quad.h" />
   </ItemGroup>
   <ItemGroup>

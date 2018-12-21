@@ -1,8 +1,10 @@
-#ifndef _MAINSCENE_
-#define _MAINSCENE_
+#ifndef MAIN_SCENE_H
+#define MAIN_SCENE_H
 
 #include <QOpenglWidget.h>
 #include <QGraphicsScene.h>
+#include <QOpenGLFunctions.h>
+#include "TargetScene.h"
 
 /*
     provide a surface for managing widgets and items
@@ -15,10 +17,6 @@ public:
 
     void initialize();
 
-
-    void drawAxis();
-    void renderQuad();
-
 protected:
     /*void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
@@ -27,6 +25,7 @@ protected:
 
 private:
     QOpenGLWidget* opengl_widget_ = nullptr;
+    TargetScene *target_scene_ = nullptr;
 };
 
 #endif

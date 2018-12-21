@@ -1,5 +1,5 @@
-#ifndef _SYSTEM_
-#define _SYSTEM_
+#ifndef SYSTEM_H
+#define SYSTEM_H
 
 /*
     System class, used for widget setting and project configuration
