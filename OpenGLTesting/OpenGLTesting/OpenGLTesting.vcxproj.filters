@@ -58,7 +58,7 @@
     <ClCompile Include="System\mainView.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="System\TargetScene.cpp">
+    <ClCompile Include="System\TargetWidget.cpp">
       <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>
@@ -75,16 +75,16 @@
     <ClInclude Include="System\System.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="Targets\Quad.h">
-      <Filter>Targets</Filter>
-    </ClInclude>
     <ClInclude Include="Shader\ShaderObject.h">
       <Filter>Shader</Filter>
     </ClInclude>
     <ClInclude Include="Shader\ObjectRenderModule.h">
       <Filter>Shader</Filter>
     </ClInclude>
-    <ClInclude Include="System\TargetScene.h">
+    <ClInclude Include="Targets\Quad.h">
+      <Filter>Targets</Filter>
+    </ClInclude>
+    <ClInclude Include="System\TargetWidget.h">
       <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>

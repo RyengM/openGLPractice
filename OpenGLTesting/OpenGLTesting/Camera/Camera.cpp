@@ -1,12 +1,17 @@
 #include "Camera.h"
 #include "glm/gtc/matrix_transform.hpp"
 
+
+Camera::Camera()
+{
+
+}
+
 // Constructor with vectors
 Camera::Camera(int id)
 {
     //set basic configuration
     origin = glm::vec3(0.0f, 0.0f, 0.0f);
-    //target = Target;
     worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
     yaw = YAW;
     pitch = PITCH;

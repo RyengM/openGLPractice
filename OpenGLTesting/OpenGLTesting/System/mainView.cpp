@@ -10,8 +10,16 @@ MainView::MainView()
     setWindowTitle(QStringLiteral("部件测试平台"));
     setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 
+    //set format globally applicated in all contexts
+    QSurfaceFormat format;
+    format.setDepthBufferSize(24);
+    format.setStencilBufferSize(8);
+    format.setVersion(3, 2);
+    format.setProfile(QSurfaceFormat::CoreProfile);
+    QSurfaceFormat::setDefaultFormat(format);
+
     //main widget for loading OPENGL items
-    main_widget_ = new QOpenGLWidget();
+    main_widget_ = new QOpenGLWidget(); //set my_widget inherit QOpenGLWidget and then new this, rewrite three necessary functions
     main_widget_->makeCurrent();
     setViewport(main_widget_);
     //viewport will never be updated when secene is changed, user is expected to controll all updates
@@ -64,5 +72,5 @@ void MainView::resizeEvent(QResizeEvent* event)
 void MainView::keyPressEvent(QKeyEvent *e)
 {
     if (e->key() == Qt::Key_Escape)
-        close();
+        exit(0);
 }

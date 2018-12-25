@@ -10,7 +10,7 @@ MainScene::MainScene(QOpenGLWidget *opengl_widget) : opengl_widget_(opengl_widge
 
 MainScene::~MainScene()
 {
-
+    delete target_scene_;
 }
 
 void MainScene::initialize()

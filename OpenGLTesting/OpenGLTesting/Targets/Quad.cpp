@@ -1,4 +1,3 @@
-#include <GL/glew.h>
 #include <camera/Camera.h>
 
 #include <glm/gtc/matrix_transform.hpp>
@@ -15,7 +14,7 @@ Quad::Quad()
 
 void Quad::build_render_config()
 {
-    initializeOpenGLFunctions();
+    //glf = QOpenGLContext::currentContext()->versionFunctions<QOpenGLExtraFunctions>();
 
     //bind vao, vbo and transport the necessary parameters to shader
     glGenVertexArrays(1, &vao_);
