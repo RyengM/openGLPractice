@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include "glm/gtc/matrix_transform.hpp"
+#include <iostream>
 
 
 Camera::Camera()
@@ -21,7 +22,7 @@ Camera::Camera(int id)
     updateCameraVectors();
 }
 
-glm::mat4 Camera::getViewMatrix()
+glm::mat4 Camera::getViewMatrix(glm::vec3 target)
 {
     return glm::lookAt(origin, target, up);
 }

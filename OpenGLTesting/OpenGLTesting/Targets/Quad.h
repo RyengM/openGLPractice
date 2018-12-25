@@ -15,6 +15,7 @@ public:
     Camera camera;
 
     Quad();
+    ~Quad();
 
     void build_render_config();
     void render();

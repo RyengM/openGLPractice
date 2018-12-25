@@ -34,7 +34,7 @@ public:
     Camera();
     Camera(int id);
     //to get the current view
-    glm::mat4 getViewMatrix();
+    glm::mat4 getViewMatrix(glm::vec3 target);
 
 private:
     // Calculates the front vector from the Camera's (updated) Euler Angles

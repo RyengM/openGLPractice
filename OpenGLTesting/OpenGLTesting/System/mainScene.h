@@ -4,7 +4,8 @@
 #include <QOpenglWidget.h>
 #include <QGraphicsScene.h>
 #include <QOpenGLFunctions.h>
-#include "TargetScene.h"
+
+#include "TargetWidget.h"
 
 /*
     provide a surface for managing widgets and items
@@ -12,20 +13,20 @@
 class MainScene: public QGraphicsScene
 {
 public:
-    MainScene(QOpenGLWidget *opengl_widget);
+    MainScene(TargetWidget *opengl_widget);
     ~MainScene();
 
     void initialize();
 
 protected:
-    /*void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
-    void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
-    void wheelEvent(QGraphicsSceneWheelEvent* event) override;*/
+    void key_press(QKeyEvent* event) const;
+    void mousePressEvent(QGraphicsSceneMouseEvent* event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
+    void wheelEvent(QGraphicsSceneWheelEvent* event) const;
 
 private:
-    QOpenGLWidget* opengl_widget_ = nullptr;
-    TargetScene *target_scene_ = nullptr;
+    TargetWidget* opengl_widget_ = nullptr;
 };
 
 #endif

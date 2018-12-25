@@ -2,9 +2,9 @@
 #define  MAIN_VIEW_H
 
 #include <QGraphicsView.h>
-#include <QOpenglWidget.h>
 
-#include <System/mainScene.h>
+#include "mainScene.h"
+#include "TargetWidget.h"
 
 /*
     provide a widget for displaying the contents of mainScene
@@ -20,13 +20,13 @@ public:
     void show_up();
 
 protected:
-    void closeEvent(QCloseEvent *event) override;
-    void resizeEvent(QResizeEvent *event) override;
+    void closeEvent(QCloseEvent *event);
+    void resizeEvent(QResizeEvent *event);
     void keyPressEvent(QKeyEvent *event);
 
 private:
     MainScene *main_scene_;
-    QOpenGLWidget *main_widget_;
+    TargetWidget *main_widget_;
 };
 
 

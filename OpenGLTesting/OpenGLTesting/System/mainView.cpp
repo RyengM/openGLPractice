@@ -19,11 +19,11 @@ MainView::MainView()
     QSurfaceFormat::setDefaultFormat(format);
 
     //main widget for loading OPENGL items
-    main_widget_ = new QOpenGLWidget(); //set my_widget inherit QOpenGLWidget and then new this, rewrite three necessary functions
-    main_widget_->makeCurrent();
+    main_widget_ = new TargetWidget(); //set my_widget inherit QOpenGLWidget and then new this, rewrite three necessary functions
     setViewport(main_widget_);
-    //viewport will never be updated when secene is changed, user is expected to controll all updates
-    setViewportUpdateMode(NoViewportUpdate);
+    //makeCurrent() will be invoked whenever initializeGL or paintGL is called
+ 
+    setViewportUpdateMode(NoViewportUpdate); //viewport will never be updated when secene is changed, user is expected to controll all updates
 
     main_scene_ = new MainScene(main_widget_);
     setScene(main_scene_);
