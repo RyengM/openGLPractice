@@ -1,0 +1,4 @@
+<RCC>
+    <qresource prefix="MyGLWidget">
+    </qresource>
+</RCC>

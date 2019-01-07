@@ -1,9 +1,9 @@
-#include "ShaderObject.h"
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <vector>
+
+#include <headFiles/ShaderObject.h>
 
 ShaderObject::ShaderObject(const std::string& vertex_shader_file, const std::string& fragment_shader_file)
 {
@@ -45,7 +45,7 @@ void ShaderObject::build(const std::string& vertex_shader_file, const std::strin
     if (success == 0)
     {
         glGetShaderInfoLog(vertex_shader, 512, nullptr, info_log);
-        std::cout << "vertex shader compilation failed, " << info_log <<std::endl;
+        std::cout << "vertex shader compilation failed, " << info_log << std::endl;
     }
 
     // fragment shader
@@ -114,7 +114,7 @@ float* ShaderObject::getVertexInfo(const std::string& filename)
                     i = 0;
                     vertex.push_back(atof(vertex_value));
                 }
-                else 
+                else
                     vertex_value[i++] = temp_c;
             }
         }
@@ -124,10 +124,11 @@ float* ShaderObject::getVertexInfo(const std::string& filename)
         std::cout << "cannot open vertex file {}" << filename << std::endl;
         exit(EXIT_FAILURE);
     }
-    /*float *result_buffer = new float[vertex.size()];
+    // the value of result_buffer have to be checked
+    float *result_buffer = new float[vertex.size()];
     if (!vertex.empty())
-        memcpy(result_buffer, &vertex[0], vertex.size() * sizeof(float));*/
-    return &vertex[0];
+        memcpy(result_buffer, &vertex[0], vertex.size() * sizeof(float));
+    return result_buffer;
 }
 
 void ShaderObject::set_bool(const std::string& name, bool value)

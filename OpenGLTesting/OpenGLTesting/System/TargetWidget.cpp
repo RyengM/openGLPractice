@@ -1,7 +1,14 @@
 #include "TargetWidget.h"
 #include "QOpenGLContext.h"
 
-TargetWidget::TargetWidget()
+#include <iostream>
+
+TargetWidget::TargetWidget(QWidget *parent):QOpenGLWidget(parent)
+{
+
+}
+
+TargetWidget::~TargetWidget()
 {
 
 }
@@ -24,7 +31,9 @@ int TargetWidget::get_current_id()
 
 void TargetWidget::initializeGL()
 {
+    std::cout << "initialize OPENGL" << std::endl;
     initializeOpenGLFunctions();
+    glClearColor(1.0f, 0.0f, 0.0f, 0.5f);
     show_quad();
 }
 

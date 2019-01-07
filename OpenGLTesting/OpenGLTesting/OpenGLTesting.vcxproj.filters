@@ -81,11 +81,11 @@
     <ClInclude Include="Shader\ObjectRenderModule.h">
       <Filter>Shader</Filter>
     </ClInclude>
-    <ClInclude Include="System\TargetWidget.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="Targets\Quad.h">
       <Filter>Targets</Filter>
+    </ClInclude>
+    <ClInclude Include="System\TargetWidget.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

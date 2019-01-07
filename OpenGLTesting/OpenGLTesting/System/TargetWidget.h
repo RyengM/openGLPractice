@@ -3,6 +3,7 @@
 
 #include <QOpenglFunctions.h>
 #include <QOpenGLWidget.h>
+#include <QWidget.h>
 #include <QGraphicsSceneEvent.h>
 #include <Targets/Quad.h>
 
@@ -13,7 +14,8 @@ class TargetWidget : public QOpenGLWidget , protected QOpenGLFunctions
 {
 public:
     // initialize necessary configuration
-    TargetWidget();
+    explicit TargetWidget(QWidget *parent = 0);
+    ~TargetWidget();
 
     // used for switching target item, is not necessary now
     void show_item(int current_show);
