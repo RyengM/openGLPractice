@@ -13,7 +13,7 @@ public:
     ShaderObject(const std::string& vertex_shader_file,
         const std::string& fragment_shader_file);
 
-    char const* getVertexInfo(const std::string& filename);
+    float* getVertexInfo(const std::string& filename);
 
     void build(const std::string& vertex_shader_file,
         const std::string& fragment_shader_file);

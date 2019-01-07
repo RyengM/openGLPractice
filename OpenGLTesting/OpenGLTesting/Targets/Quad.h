@@ -21,7 +21,7 @@ public:
     void render();
 
 private:
-    char const* vertexInfo;
+    float* vertexInfo;
     QOpenGLExtraFunctions *glf;
     ShaderObject quadObject = ShaderObject();
     GLuint shader_program_;

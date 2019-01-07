@@ -4,11 +4,14 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Quad.h"
+#include <iostream>
 
 
 Quad::Quad()
 {
     camera = Camera(id);
+    // set shader program
+    this->shader_program_ = quadObject.get_shader_program();
     // set current context and start up glfunctions
     glf = QOpenGLContext::currentContext()->extraFunctions();
     // bind a camera and initialize it

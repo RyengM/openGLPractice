@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <vector>
 
 ShaderObject::ShaderObject(const std::string& vertex_shader_file, const std::string& fragment_shader_file)
 {
@@ -91,24 +92,42 @@ void ShaderObject::build(const std::string& vertex_shader_file, const std::strin
     glDeleteShader(fragment_shader);
 }
 
-char const* ShaderObject::getVertexInfo(const std::string& filename)
+float* ShaderObject::getVertexInfo(const std::string& filename)
 {
-    std::string vertex_code;
+    // index of vertex_value
+    int i = 0;
+    // current character
+    char temp_c;
+    std::vector<float> vertex;
+    char vertex_value[6];
     std::ifstream vertex_stream(filename, std::ios::in);
     if (vertex_stream.is_open())
     {
-        std::string line;
-        while (getline(vertex_stream, line))
-            vertex_code += "\n" + line;
-        vertex_stream.close();
+        while (!vertex_stream.eof())
+        {
+            if (vertex_stream.good())
+            {
+                vertex_stream >> temp_c;
+                if (temp_c == 'f')
+                {
+                    vertex_value[i] = '\0';
+                    i = 0;
+                    vertex.push_back(atof(vertex_value));
+                }
+                else 
+                    vertex_value[i++] = temp_c;
+            }
+        }
     }
     else
     {
         std::cout << "cannot open vertex file {}" << filename << std::endl;
         exit(EXIT_FAILURE);
     }
-    char const* vertex_source = vertex_code.c_str();
-    return vertex_source;
+    float *result_buffer = new float(sizeof(vertex));
+    if (!vertex.empty())
+        memcpy(result_buffer, &vertex[0], vertex.size() * sizeof(float));
+    return result_buffer;
 }
 
 void ShaderObject::set_bool(const std::string& name, bool value)
