@@ -8,7 +8,7 @@
 
 Quad::Quad()
 {
-    camera = Camera();
+    //camera = Camera();
     // set shader program
     this->shader_program_ = quadObject.get_shader_program();
 }
@@ -41,6 +41,7 @@ void Quad::build_render_config()
     glf->glEnableVertexAttribArray(1);
 
     quadObject.build("../assets/shaders/quad.vert", "../assets/shaders/quad.frag");
+    this->shader_program_ = quadObject.get_shader_program();
 
     // unbind
     glf->glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -50,18 +51,18 @@ void Quad::build_render_config()
 void Quad::render()
 {
     // MVP transform
-    glm::mat4 model(1.0f);
-    glm::mat4 view(1.0f);
-    glm::mat4 projection;
+    //glm::mat4 model(1.0f);
+    //glm::mat4 view(1.0f);
+    //glm::mat4 projection;
 
-    // camera/view transformation
-    float radius = 10.0f;
+    //// camera/view transformation
+    //float radius = 10.0f;
 
-    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-    view = camera.getViewMatrix(position);
-    projection = glm::perspective(glm::radians(camera.zoom), 800.0f / 600.0f, 0.1f, 100.0f);
+    //model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+    //view = camera.getViewMatrix(position);
+    //projection = glm::perspective(glm::radians(camera.zoom), 800.0f / 600.0f, 0.1f, 100.0f);
 
-    glm::mat4 mvp = projection * view * model;
+    //glm::mat4 mvp = projection * view * model;
 
-    quadObject.set_mat4("mvp", mvp);
+    //quadObject.set_mat4("mvp", mvp);
 }
