@@ -40,9 +40,11 @@ public:
     void release();
 
     GLuint get_shader_program() const;
+    int get_vertex_size() const;
 
 private:
     GLuint program_ = 0u;
+    int vertex_size;
 };
 
 

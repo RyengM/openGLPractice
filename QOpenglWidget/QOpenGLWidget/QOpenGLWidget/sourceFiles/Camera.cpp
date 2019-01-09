@@ -54,7 +54,7 @@ Camera& Camera::operator=(Camera&& camera) noexcept
 
 void Camera::rotate()
 {
-
+    rotate(phi, theta);
 }
 
 // camera rotate around target

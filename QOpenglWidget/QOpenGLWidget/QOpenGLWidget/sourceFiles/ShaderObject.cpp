@@ -96,6 +96,8 @@ float* ShaderObject::getVertexInfo(const std::string& filename)
 {
     // index of vertex_value
     int i = 0;
+    // initialize number of vertices
+    vertex_size = 0;
     // current character
     char temp_c;
     std::vector<float> vertex;
@@ -113,6 +115,7 @@ float* ShaderObject::getVertexInfo(const std::string& filename)
                     vertex_value[i] = '\0';
                     i = 0;
                     vertex.push_back(atof(vertex_value));
+                    vertex_size++;
                 }
                 else
                     vertex_value[i++] = temp_c;
@@ -125,9 +128,11 @@ float* ShaderObject::getVertexInfo(const std::string& filename)
         exit(EXIT_FAILURE);
     }
     // the value of result_buffer have to be checked
-    float *result_buffer = new float[vertex.size()];
+    float *result_buffer = new float[vertex.size() - 1];
     if (!vertex.empty())
-        memcpy(result_buffer, &vertex[0], vertex.size() * sizeof(float));
+        memcpy(result_buffer, &vertex[0], (vertex.size()-1) * sizeof(float));
+    // there will be an extra 0.0f at the end of array, i don't know why yet, vertex.size()-1 is also influenced
+    vertex_size--;
     return result_buffer;
 }
 
@@ -209,4 +214,9 @@ void ShaderObject::release()
 GLuint ShaderObject::get_shader_program() const
 {
     return this->program_;
+}
+
+int ShaderObject::get_vertex_size() const
+{
+    return this->vertex_size;
 }

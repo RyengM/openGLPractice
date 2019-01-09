@@ -15,6 +15,8 @@ public:
     void build_render_config();
     void render(Camera camera);
 
+    glm::vec3 get_position();
+
 private:
     // basic parameters
     //int id = 1;

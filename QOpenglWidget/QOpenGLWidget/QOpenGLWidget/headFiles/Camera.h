@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 
 #define VIEW_CENTER_DEFAULT glm::vec3(0.f, 0.f, 0.f)
-#define VIEW_OFFSET_DEFAULT glm::vec3(120.f, 120.f, -30.f)
+#define VIEW_OFFSET_DEFAULT glm::vec3(10.f, 10.f, -10.f)
 #define ZOOM_SPEED 0.15f
 #define ZOOM_NEAR 0.001f
 #define ZOOM_FAR 10000.f
