@@ -13,13 +13,12 @@ public:
     ~Quad();
 
     void build_render_config();
-    void render();
+    void render(Camera camera);
 
 private:
     // basic parameters
-    int id = 1;
+    //int id = 1;
     glm::vec3 position;
-    Camera camera;
     float* vertexInfo;
     ShaderObject quadObject = ShaderObject();
     GLuint shader_program_;

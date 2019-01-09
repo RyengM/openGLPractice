@@ -129,3 +129,8 @@ void Camera::set_theta(float Theta)
 {
     theta = Theta;
 }
+
+float Camera::get_fovy() const
+{
+    return fovy;
+}

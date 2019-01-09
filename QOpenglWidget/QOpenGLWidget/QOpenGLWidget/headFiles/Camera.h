@@ -10,6 +10,8 @@
 #define ZOOM_FAR 10000.f
 /*
     Camera class, used for looking at a specific item
+    We can adjust the position of camera by changing distance, phi and theta
+    Each camera is always looking at the target
 */
 
 class Camera
@@ -45,22 +47,20 @@ public:
     float get_theta() const;
     void set_theta(float Theta);
 
+    float get_fovy() const;
+
 private:
 
     //int id;
     //camera config
     glm::vec3 view_center_;         // center where camera looks at 
-    glm::vec3 view_offset_;         // offset between camera and target
+    glm::vec3 view_offset_;         // offset between camera and target, point at camera
 
     float distance;                 // scalar of view_offset_
     float phi;                      // polar angle
     float theta;                    // azimuth angle
 
-    //float movementSpeed;
-    //float mouseSensitivity;
-    //float zoom;
-    // Calculates the front vector from the Camera's (updated) Euler Angles
-    //void updateCameraVectors();
+    float fovy = 45.f;              // perspective angle
 };
 
 #endif

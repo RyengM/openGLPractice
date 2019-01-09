@@ -6,6 +6,7 @@
 #include <ui_MyGLWidget.h>
 
 #include <headFiles/Quad.h>
+#include <headFiles/Camera.h>
 
 class MyGLWidget : public QOpenGLWidget
 {
@@ -29,6 +30,7 @@ protected:
 
 private:
     Quad quad;
+    Camera camera;
 
     Ui::MyGLWidgetClass ui;
 };
