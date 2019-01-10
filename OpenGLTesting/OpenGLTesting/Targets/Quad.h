@@ -9,20 +9,19 @@
 class Quad : protected QOpenGLExtraFunctions
 {
 public:
-    //basic parameters
-    int id = 1;
-    glm::vec3 position;
-    Camera camera;
-
     Quad();
     ~Quad();
 
     void build_render_config();
-    void render();
+    void render(Camera camera);
+
+    glm::vec3 get_position();
 
 private:
+    // basic parameters
+    //int id = 1;
+    glm::vec3 position;
     float* vertexInfo;
-    QOpenGLExtraFunctions *glf;
     ShaderObject quadObject = ShaderObject();
     GLuint shader_program_;
     GLuint vao_;
@@ -30,4 +29,3 @@ private:
 };
 
 #endif
-

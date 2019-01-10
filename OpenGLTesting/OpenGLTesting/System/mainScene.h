@@ -1,7 +1,6 @@
 #ifndef MAIN_SCENE_H
 #define MAIN_SCENE_H
 
-#include <QOpenglWidget.h>
 #include <QGraphicsScene.h>
 #include <QOpenGLFunctions.h>
 
@@ -19,11 +18,7 @@ public:
     void initialize();
 
 protected:
-    void key_press(QKeyEvent* event) const;
-    void mousePressEvent(QGraphicsSceneMouseEvent* event);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
-    void wheelEvent(QGraphicsSceneWheelEvent* event) const;
+    void drawBackground(QPainter *painter, const QRectF &rect);
 
 private:
     TargetWidget* opengl_widget_ = nullptr;

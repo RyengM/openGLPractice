@@ -72,9 +72,6 @@
     <ClInclude Include="System\mainScene.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="System\System.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="Shader\ShaderObject.h">
       <Filter>Shader</Filter>
     </ClInclude>
@@ -83,9 +80,6 @@
     </ClInclude>
     <ClInclude Include="Targets\Quad.h">
       <Filter>Targets</Filter>
-    </ClInclude>
-    <ClInclude Include="System\TargetWidget.h">
-      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -111,5 +105,13 @@
     <QtMoc Include="System\mainView.h">
       <Filter>System</Filter>
     </QtMoc>
+    <QtMoc Include="System\TargetWidget.h">
+      <Filter>System</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\assets\shaders\quad.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

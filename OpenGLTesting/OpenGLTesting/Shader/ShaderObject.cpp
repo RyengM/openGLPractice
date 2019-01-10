@@ -1,9 +1,9 @@
-#include "ShaderObject.h"
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <vector>
+
+#include <Shader/ShaderObject.h>
 
 ShaderObject::ShaderObject(const std::string& vertex_shader_file, const std::string& fragment_shader_file)
 {
@@ -45,7 +45,7 @@ void ShaderObject::build(const std::string& vertex_shader_file, const std::strin
     if (success == 0)
     {
         glGetShaderInfoLog(vertex_shader, 512, nullptr, info_log);
-        std::cout << "vertex shader compilation failed, " << info_log <<std::endl;
+        std::cout << "vertex shader compilation failed, " << info_log << std::endl;
     }
 
     // fragment shader
@@ -96,6 +96,8 @@ float* ShaderObject::getVertexInfo(const std::string& filename)
 {
     // index of vertex_value
     int i = 0;
+    // initialize number of vertices
+    vertex_size = 0;
     // current character
     char temp_c;
     std::vector<float> vertex;
@@ -113,8 +115,9 @@ float* ShaderObject::getVertexInfo(const std::string& filename)
                     vertex_value[i] = '\0';
                     i = 0;
                     vertex.push_back(atof(vertex_value));
+                    vertex_size++;
                 }
-                else 
+                else
                     vertex_value[i++] = temp_c;
             }
         }
@@ -124,10 +127,13 @@ float* ShaderObject::getVertexInfo(const std::string& filename)
         std::cout << "cannot open vertex file {}" << filename << std::endl;
         exit(EXIT_FAILURE);
     }
-    /*float *result_buffer = new float[vertex.size()];
+    // the value of result_buffer have to be checked
+    float *result_buffer = new float[vertex.size() - 1];
     if (!vertex.empty())
-        memcpy(result_buffer, &vertex[0], vertex.size() * sizeof(float));*/
-    return &vertex[0];
+        memcpy(result_buffer, &vertex[0], (vertex.size() - 1) * sizeof(float));
+    // there will be an extra 0.0f at the end of array, i don't know why yet, vertex.size()-1 is also influenced
+    vertex_size--;
+    return result_buffer;
 }
 
 void ShaderObject::set_bool(const std::string& name, bool value)
@@ -208,4 +214,9 @@ void ShaderObject::release()
 GLuint ShaderObject::get_shader_program() const
 {
     return this->program_;
+}
+
+int ShaderObject::get_vertex_size() const
+{
+    return this->vertex_size;
 }

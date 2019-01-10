@@ -1,9 +1,10 @@
-#include "TargetWidget.h"
-#include "QOpenGLContext.h"
-
+#include <QOpenGLFunctions.h>
+#include <QOpenGLContext.h>
+#include <QEvent.h>
 #include <iostream>
+#include <System/TargetWidget.h>
 
-TargetWidget::TargetWidget(QWidget *parent):QOpenGLWidget(parent)
+TargetWidget::TargetWidget() : mouse_pos_last(glm::vec3(0, 0, 0)), mouse_press(false)
 {
 
 }
@@ -13,71 +14,68 @@ TargetWidget::~TargetWidget()
 
 }
 
-void TargetWidget::show_item(int id)
-{
-    //to do after
-}
-
-void TargetWidget::show_quad()
-{
-    quad = new Quad();
-    quad->render();
-}
-
-int TargetWidget::get_current_id()
-{
-    return current_show;
-}
-
 void TargetWidget::initializeGL()
 {
     std::cout << "initialize OPENGL" << std::endl;
-    initializeOpenGLFunctions();
-    glClearColor(1.0f, 0.0f, 0.0f, 0.5f);
-    show_quad();
+    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+    f->glClearColor(0.1, 0, 0, 1);
+    f->glEnable(GL_DEPTH_TEST);
+    // ready for quad rendering
+    quad = Quad();
+    quad.build_render_config();
+
+    camera = Camera(quad.get_position());
 }
 
 void TargetWidget::paintGL()
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    glLoadIdentity();
-    quad->render();
+    std::cout << "paint" << std::endl;
+    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+    f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    quad.render(camera);
 }
 
 void TargetWidget::resizeGL(int w, int h)
 {
-    glViewport(0, 0, w, h);
+    
 }
 
-void TargetWidget::key_press(QKeyEvent* event) 
+void TargetWidget::mousePressEvent(QMouseEvent *event)
 {
+    mouse_pos_last.x = event->screenPos().x();
+    mouse_pos_last.y = event->screenPos().y();
 
+    mouse_press = true;
 }
 
-void TargetWidget::mouse_press(QGraphicsSceneMouseEvent* event)
+void TargetWidget::mouseMoveEvent(QMouseEvent *event)
 {
-    if (event->buttons() & Qt::LeftButton || event->buttons() & Qt::RightButton)
-    {
-        key_last_.x = event->screenPos().x();
-        key_last_.y = event->screenPos().y();
-        key_pressed_ = true;
-    }
-}
-
-void TargetWidget::mouse_move(QGraphicsSceneMouseEvent* event)
-{
-    if (!key_pressed_) return;
+    if (!mouse_press) return;
 
     glm::vec2 current_pos(event->screenPos().x(), event->screenPos().y());
-    glm::vec2 delta = (current_pos - key_last_) * 0.1f;
+    glm::vec2 delta = (current_pos - mouse_pos_last) * 0.1f;
 
-    // adjust the parameters of camera
+    float phi = camera.get_phi();
+    float theta = camera.get_theta();
 
-    key_last_ = current_pos;
+    phi += delta.x;
+    theta += delta.y;
+
+    camera.set_phi(phi);
+    camera.set_theta(theta);
+    camera.rotate();
+
+    mouse_pos_last = current_pos;
+    update();
 }
 
-void TargetWidget::mouse_release(QGraphicsSceneMouseEvent* event)
+void TargetWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-    key_pressed_ = false;
+    mouse_press = false;
+}
+
+void TargetWidget::wheelEvent(QWheelEvent *event)
+{
+    camera.zoom(event->delta()*(-0.1));
+    update();
 }

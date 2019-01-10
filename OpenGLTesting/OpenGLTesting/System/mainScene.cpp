@@ -1,5 +1,6 @@
 #include <iostream>
 #include <System/mainScene.h>
+#include <QPainter.h>
 
 
 MainScene::MainScene(TargetWidget *opengl_widget) : opengl_widget_(opengl_widget)
@@ -17,39 +18,25 @@ void MainScene::initialize()
     //opengl_widget_->show_quad();
 }
 
-void MainScene::key_press(QKeyEvent* event) const
+void MainScene::drawBackground(QPainter *painter, const QRectF &rect)
 {
-
-}
-
-void MainScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
-{
-    QGraphicsScene::mousePressEvent(event);
-    if (event->isAccepted()) return;
-
-    opengl_widget_->mouse_press(event);
-    event->accept();
-}
-
-void MainScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
-{
-    QGraphicsScene::mouseReleaseEvent(event);
-    if (event->isAccepted()) return;
-
-    opengl_widget_->mouse_release(event);
-    event->accept();
-}
-
-void MainScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
-{
-    QGraphicsScene::mouseMoveEvent(event);
-    if (event->isAccepted()) return;
-
-    opengl_widget_->mouse_move(event);
-    event->accept();
-}
-
-void MainScene::wheelEvent(QGraphicsSceneWheelEvent* event) const
-{
-
+    painter->save();
+    painter->beginNativePainting();
+    glPushAttrib(GL_ALL_ATTRIB_BITS);
+    {
+        glMatrixMode(GL_PROJECTION);
+        glPushMatrix();
+        glMatrixMode(GL_MODELVIEW);
+        glPushMatrix();
+        {
+            
+        }
+        glMatrixMode(GL_MODELVIEW);
+        glPopMatrix();
+        glMatrixMode(GL_PROJECTION);
+        glPopMatrix();
+    }
+    glPopAttrib();
+    painter->endNativePainting();
+    painter->restore();
 }
