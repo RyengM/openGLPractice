@@ -12,11 +12,17 @@ MyGLWidget::MyGLWidget(QOpenGLWidget *parent)
 
 MyGLWidget::~MyGLWidget()
 {
-
+    delete timer;
 }
 
 void MyGLWidget::initializeGL()
 {
+    // set timer to refresh screen per 20ms
+    /*timer = new QTimer(this);
+    timer->start(20);
+    timer->setTimerType(Qt::PreciseTimer);
+    connect(timer, &QTimer::timeout, this, &MyGLWidget::paintGL);*/
+
     std::cout << "initialize OPENGL" << std::endl;
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     f->glClearColor(0.1, 0, 0, 1);
@@ -38,6 +44,12 @@ void MyGLWidget::paintGL()
 void MyGLWidget::resizeGL(int w, int h)
 {
     showMaximized();
+}
+
+void MyGLWidget::keyPressEvent(QKeyEvent *event)
+{
+    // 空格控制仿真开始于暂停
+    // TODO
 }
 
 void MyGLWidget::mousePressEvent(QMouseEvent *event)

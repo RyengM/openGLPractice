@@ -4,6 +4,7 @@
 //#include <QtWidgets/QMainWindow>
 #include <QOpenglwidget.h>
 #include <ui_MyGLWidget.h>
+#include <QTimer.h>
 
 #include <headFiles/Quad.h>
 #include <headFiles/Camera.h>
@@ -30,6 +31,7 @@ protected:
     void resizeGL(int w, int h);
 
     // rewrite event handle functions
+    void keyPressEvent(QKeyEvent *event);
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
@@ -41,6 +43,9 @@ private:
 
     glm::vec2 mouse_pos_last;           // the position of mouse on screen, including x and y
     boolean mouse_press;                // signal whether mouse is pressed
+
+    QTimer *timer;
+    float simulation_interval = 0.02f;
 
     Ui::MyGLWidgetClass ui;
 };
