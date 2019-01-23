@@ -66,6 +66,9 @@
     <ClCompile Include="sourceFiles\Smoke.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sourceFiles\Object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headFiles\ShaderObject.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headFiles\Smoke.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headFiles\Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

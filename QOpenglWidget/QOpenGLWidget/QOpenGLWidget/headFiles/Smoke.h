@@ -1,8 +1,7 @@
 #ifndef SMOKE_H
 #define SMOKE_H
 
-#include <glm/glm.hpp>
-#include <headFiles/ShaderObject.h>
+#include <headFiles/Object.h>
 
 #define MAX_PARTICLES 1000
 
@@ -15,7 +14,7 @@ typedef struct
     glm::vec3 velocity = glm::vec3(0,0,0);
 }particles;
 
-class Smoke
+class Smoke : protected Object
 {
 public:
 
@@ -27,10 +26,7 @@ public:
     particles particle[MAX_PARTICLES];
 
 private:
-    ShaderObject smokeObject = ShaderObject();
-    GLuint shader_program_;
-    GLuint vao_;
-    GLuint vbo_;
+    
 };
 
 #endif // !SMOKE_H

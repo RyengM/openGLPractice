@@ -128,12 +128,14 @@
     <ClCompile Include="sourceFiles\Camera.cpp" />
     <ClCompile Include="sourceFiles\main.cpp" />
     <ClCompile Include="sourceFiles\MyGLWidget.cpp" />
+    <ClCompile Include="sourceFiles\Object.cpp" />
     <ClCompile Include="sourceFiles\Quad.cpp" />
     <ClCompile Include="sourceFiles\ShaderObject.cpp" />
     <ClCompile Include="sourceFiles\Smoke.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headFiles\Camera.h" />
+    <ClInclude Include="headFiles\Object.h" />
     <ClInclude Include="headFiles\Quad.h" />
     <ClInclude Include="headFiles\ShaderObject.h" />
     <ClInclude Include="headFiles\Smoke.h" />

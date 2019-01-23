@@ -30,6 +30,8 @@ protected:
     void paintGL();
     void resizeGL(int w, int h);
 
+    void updateScene();
+
     // rewrite event handle functions
     void keyPressEvent(QKeyEvent *event);
     void mousePressEvent(QMouseEvent *event);
@@ -44,8 +46,9 @@ private:
     glm::vec2 mouse_pos_last;           // the position of mouse on screen, including x and y
     boolean mouse_press;                // signal whether mouse is pressed
 
-    QTimer *timer;
+    QTimer *timer;                      // timer, used for simulation updating
     float simulation_interval = 0.02f;
+    int simulation_condition = 0;           // record simulation condition, 0: initial, 1: run, 2: pause
 
     Ui::MyGLWidgetClass ui;
 };

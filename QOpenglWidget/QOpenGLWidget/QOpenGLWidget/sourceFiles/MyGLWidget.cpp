@@ -17,11 +17,10 @@ MyGLWidget::~MyGLWidget()
 
 void MyGLWidget::initializeGL()
 {
-    // set timer to refresh screen per 20ms
-    /*timer = new QTimer(this);
-    timer->start(20);
+    // set timer to refresh screen per 20ms, setting at keyPressEvent
+    timer = new QTimer(this);
     timer->setTimerType(Qt::PreciseTimer);
-    connect(timer, &QTimer::timeout, this, &MyGLWidget::paintGL);*/
+    connect(timer, &QTimer::timeout, this, &MyGLWidget::updateScene);
 
     std::cout << "initialize OPENGL" << std::endl;
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
@@ -46,10 +45,35 @@ void MyGLWidget::resizeGL(int w, int h)
     showMaximized();
 }
 
+void MyGLWidget::updateScene()
+{
+    update();
+}
+
 void MyGLWidget::keyPressEvent(QKeyEvent *event)
 {
-    // 空格控制仿真开始于暂停
-    // TODO
+    if (event->key() == Qt::Key_Space)
+    {
+        if (simulation_condition == 0 || simulation_condition == 2)
+        {
+            simulation_condition = 1;
+            timer->start(20);
+        }
+        else
+        {
+            simulation_condition = 2;
+            timer->stop();
+        }
+            
+    }
+    if (event->key() == Qt::Key_S)
+    {
+        simulation_condition = 0;
+        timer->stop();
+        // current_target.reset();
+    }
+    if (event->key() == Qt::Key_Escape)
+        exit(0);
 }
 
 void MyGLWidget::mousePressEvent(QMouseEvent *event)
