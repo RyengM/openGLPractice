@@ -25,12 +25,13 @@ public:
     // initialize particle system and vertex preparation
     void init();
     // update and display particle system
-    void render();
+    void render(Camera camera);
+    glm::vec3 get_position();
 
     particles particles[MAX_PARTICLES];
 
 private:
-
+    glm::vec3 position_ = glm::vec3(0,0,0);
 };
 
 #endif // !SMOKE_H

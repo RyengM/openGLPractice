@@ -7,6 +7,7 @@
 #include <QTimer.h>
 
 #include <headFiles/Quad.h>
+#include <headFiles/Smoke.h>
 #include <headFiles/Camera.h>
 
 class MyGLWidget : public QOpenGLWidget
@@ -41,6 +42,7 @@ protected:
 
 private:
     Quad quad;
+    Smoke smoke;
     Camera camera;
 
     glm::vec2 mouse_pos_last;           // the position of mouse on screen, including x and y

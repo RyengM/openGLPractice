@@ -2,7 +2,6 @@
 #define _QUAD_
 
 #include <headFiles/Object.h>
-#include <headFiles/Camera.h>
 
 class Quad : protected Object
 {

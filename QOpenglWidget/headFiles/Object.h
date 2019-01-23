@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 #include <QOpenGLExtraFunctions>
 #include <headFiles/ShaderObject.h>
+#include <headFiles/Camera.h>
 
 // abstract class, used for all objects, provide some basic parameteres
 

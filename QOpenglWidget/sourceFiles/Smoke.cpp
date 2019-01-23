@@ -1,5 +1,8 @@
 #include <headFiles/Smoke.h>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <random>
+#include <iostream>
 
 Smoke::Smoke()
 {
@@ -46,7 +49,7 @@ void Smoke::init()
     glf->glBindVertexArray(0);
 }
 
-void Smoke::render()
+void Smoke::render(Camera camera)
 {
     // update particle condition
     // emit a particle per 20ms
@@ -66,6 +69,30 @@ void Smoke::render()
     }
 
     // display particle system
+    shaderObject_.use();
 
+    // MVP transform
+    glm::mat4 model(1.0f);
+    glm::mat4 view(1.0f);
+    glm::mat4 projection;
 
+    model = glm::rotate(model, glm::radians(-55.f), glm::vec3(1.0f, 0.0f, 0.0f));
+    view = glm::lookAt(camera.get_view_offset() + position_, position_, glm::vec3(0.f, 0.f, -1.f));
+    projection = glm::perspective(glm::radians(camera.get_fovy()), 1920.f / 1080.f, 0.1f, 1000.0f);
+
+    glm::mat4 mvp = projection * view * model;
+
+    shaderObject_.set_mat4("mvp", mvp);
+
+    QOpenGLExtraFunctions *f = QOpenGLContext::currentContext()->extraFunctions();
+
+    f->glBindVertexArray(vao_);
+    f->glDrawArrays(GL_POINTS, 0, render_count_);
+
+    std::cout << "emm" << std::endl;
+}
+
+glm::vec3 Smoke::get_position()
+{
+    return position_;
 }
