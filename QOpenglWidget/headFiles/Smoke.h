@@ -2,6 +2,7 @@
 #define SMOKE_H
 
 #include <headFiles/Object.h>
+#include <QRandom.h>
 
 #define MAX_PARTICLES 1000
 
@@ -21,12 +22,15 @@ public:
     Smoke();
     ~Smoke();
 
+    // initialize particle system and vertex preparation
     void init();
+    // update and display particle system
+    void render();
 
-    particles particle[MAX_PARTICLES];
+    particles particles[MAX_PARTICLES];
 
 private:
-    
+
 };
 
 #endif // !SMOKE_H

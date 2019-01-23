@@ -143,6 +143,8 @@
   <ItemGroup>
     <None Include="..\assets\shaders\quad.frag" />
     <None Include="..\assets\shaders\quad.vert" />
+    <None Include="..\assets\shaders\smoke.frag" />
+    <None Include="..\assets\shaders\smoke.vert" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
