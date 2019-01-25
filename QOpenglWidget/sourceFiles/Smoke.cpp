@@ -25,19 +25,13 @@ void Smoke::init()
     glf->glBindVertexArray(vao_);
     glf->glBindBuffer(GL_ARRAY_BUFFER, vbo_);
 
-    // used for saving initial vertex data
-    float vertexInfo[MAX_PARTICLES * 3];
-    for (int i = 0; i < MAX_PARTICLES; i++)
-    {
-        vertexInfo[i] = particles[i / 3].position.x;
-        vertexInfo[i + 1] = particles[i / 3].position.y;
-        vertexInfo[i + 2] = particles[i / 3].position.z;
-    }
-
-    glf->glBufferData(GL_ARRAY_BUFFER, MAX_PARTICLES * sizeof(float) * 3, vertexInfo, GL_STATIC_DRAW);
+    glf->glBufferData(GL_ARRAY_BUFFER, MAX_PARTICLES * sizeof(float) * 3, nullptr, GL_DYNAMIC_DRAW);
 
     glf->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)nullptr);
     glf->glEnableVertexAttribArray(0);
+    
+    // launch cuda
+    //init_cuda();
 
     shaderObject_.build("../assets/shaders/smoke.vert", "../assets/shaders/smoke.frag");
     shader_program_ = shaderObject_.get_shader_program();
@@ -55,18 +49,8 @@ void Smoke::render(Camera camera)
     // emit a particle per 20ms
     if (render_count_ < MAX_PARTICLES)
         particles[render_count_++].active = true;
-    for (int i = 0; i < MAX_PARTICLES; i++)
-    {
-        if (particles[i].active == true)
-        {
-            srand(time(0));
-            particles[i].velocity.x = rand() % 100 / (double)100;
-            particles[i].velocity.y = rand() % 100 / (double)100;
-            particles[i].velocity.z = rand() % 100 / (double)100;
 
-            particles[i].position += particles[i].velocity;
-        }
-    }
+    //update_cuda();
 
     // display particle system
     shaderObject_.use();
@@ -82,14 +66,14 @@ void Smoke::render(Camera camera)
 
     glm::mat4 mvp = projection * view * model;
 
-    shaderObject_.set_mat4("mvp", mvp);
-
     QOpenGLExtraFunctions *f = QOpenGLContext::currentContext()->extraFunctions();
+
+    shaderObject_.set_vec3("offset", particles->offset);
+    shaderObject_.set_mat4("mvp", mvp);
 
     f->glBindVertexArray(vao_);
     f->glDrawArrays(GL_POINTS, 0, render_count_);
 
-    std::cout << "emm" << std::endl;
 }
 
 glm::vec3 Smoke::get_position()
