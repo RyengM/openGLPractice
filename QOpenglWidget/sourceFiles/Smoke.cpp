@@ -32,12 +32,13 @@ void Smoke::init()
     
     // launch cuda
     //init_cuda();
+    //crazy();
 
     shaderObject_.build("../assets/shaders/smoke.vert", "../assets/shaders/smoke.frag");
     shader_program_ = shaderObject_.get_shader_program();
 
     shaderObject_.use();
-
+    
     // unbind
     glf->glBindBuffer(GL_ARRAY_BUFFER, 0);
     glf->glBindVertexArray(0);

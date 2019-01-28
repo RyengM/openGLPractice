@@ -37,6 +37,8 @@ private:
     void update_cuda();
     void free_cuda();
 
+    void crazy();
+
     // position_ is the pos of particles, not each particle
     glm::vec3 position_ = glm::vec3(0,0,0);
 

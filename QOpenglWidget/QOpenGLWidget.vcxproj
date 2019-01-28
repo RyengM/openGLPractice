@@ -147,6 +147,7 @@
     <ClInclude Include="headFiles\Object.h" />
     <ClInclude Include="headFiles\Quad.h" />
     <ClInclude Include="headFiles\ShaderObject.h" />
+    <ClInclude Include="headFiles\smoke.cuh" />
     <ClInclude Include="headFiles\Smoke.h" />
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +162,9 @@
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="sourceFiles\smoke.cu">
+      <TargetMachinePlatform Condition="'$(Configuration)|$(Platform)'=='Release|x64'">64</TargetMachinePlatform>
+    </CudaCompile>
+    <CudaCompile Include="sourceFiles\test.cu">
       <TargetMachinePlatform Condition="'$(Configuration)|$(Platform)'=='Release|x64'">64</TargetMachinePlatform>
     </CudaCompile>
   </ItemGroup>

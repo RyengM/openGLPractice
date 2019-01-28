@@ -89,6 +89,9 @@
     <ClInclude Include="headFiles\CUDAUtilities.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="headFiles\smoke.cuh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -112,6 +115,9 @@
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="sourceFiles\smoke.cu">
+      <Filter>Source Files</Filter>
+    </CudaCompile>
+    <CudaCompile Include="sourceFiles\test.cu">
       <Filter>Source Files</Filter>
     </CudaCompile>
   </ItemGroup>

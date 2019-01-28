@@ -1,7 +1,6 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include <glm/glm.hpp>
 #include <QOpenGLExtraFunctions>
 #include <headFiles/ShaderObject.h>
 #include <headFiles/Camera.h>
