@@ -89,9 +89,6 @@
     <ClInclude Include="headFiles\CUDAUtilities.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="headFiles\smoke.cuh">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -112,13 +109,5 @@
     <Text Include="..\assets\shaders\quad.txt">
       <Filter>Shader Files</Filter>
     </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <CudaCompile Include="sourceFiles\smoke.cu">
-      <Filter>Source Files</Filter>
-    </CudaCompile>
-    <CudaCompile Include="sourceFiles\test.cu">
-      <Filter>Source Files</Filter>
-    </CudaCompile>
   </ItemGroup>
 </Project>

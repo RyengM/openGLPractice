@@ -20,6 +20,7 @@ void MyGLWidget::initializeGL()
     // set timer to refresh screen per 20ms, setting at keyPressEvent
     timer = new QTimer(this);
     timer->setTimerType(Qt::PreciseTimer);
+    timer->start(20);
     connect(timer, &QTimer::timeout, this, &MyGLWidget::updateScene);
 
     std::cout << "initialize OPENGL" << std::endl;
@@ -32,15 +33,18 @@ void MyGLWidget::initializeGL()
     smoke = Smoke();
     smoke.init();
     camera = Camera(smoke.get_position());
+    smoke.render(camera, simulation_status);
+    std::cout << "wtf" << std::endl;
     //camera = Camera(quad.get_position());
 }
 
 void MyGLWidget::paintGL()
 {
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-    f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
     //quad.render(camera);
-    smoke.render(camera);
+    f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    smoke.render(camera, simulation_status);
 }
 
 void MyGLWidget::resizeGL(int w, int h)
@@ -50,29 +54,24 @@ void MyGLWidget::resizeGL(int w, int h)
 
 void MyGLWidget::updateScene()
 {
+    // invoke virtual function
     update();
+    
 }
 
 void MyGLWidget::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Space)
     {
-        if (simulation_condition == 0 || simulation_condition == 2)
-        {
-            simulation_condition = 1;
-            timer->start(20);
-        }
+        if (simulation_status == SIMULATION_INIT || simulation_status == SIMULATION_STOP)
+            simulation_status = SIMULATION_RUN;
         else
-        {
-            simulation_condition = 2;
-            timer->stop();
-        }
+            simulation_status = SIMULATION_STOP;
             
     }
     if (event->key() == Qt::Key_S)
     {
-        simulation_condition = 0;
-        timer->stop();
+        simulation_status = SIMULATION_INIT;
         // current_target.reset();
     }
     if (event->key() == Qt::Key_Escape)

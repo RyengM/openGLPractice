@@ -45,9 +45,7 @@
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
     <Import Project="$(QtMsBuild)\qt.props" />
   </ImportGroup>
-  <ImportGroup Label="ExtensionSettings">
-    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.0.props" />
-  </ImportGroup>
+  <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Label="Shared" />
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -147,7 +145,6 @@
     <ClInclude Include="headFiles\Object.h" />
     <ClInclude Include="headFiles\Quad.h" />
     <ClInclude Include="headFiles\ShaderObject.h" />
-    <ClInclude Include="headFiles\smoke.cuh" />
     <ClInclude Include="headFiles\Smoke.h" />
   </ItemGroup>
   <ItemGroup>
@@ -160,20 +157,11 @@
   <ItemGroup>
     <Text Include="..\assets\shaders\quad.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <CudaCompile Include="sourceFiles\smoke.cu">
-      <TargetMachinePlatform Condition="'$(Configuration)|$(Platform)'=='Release|x64'">64</TargetMachinePlatform>
-    </CudaCompile>
-    <CudaCompile Include="sourceFiles\test.cu">
-      <TargetMachinePlatform Condition="'$(Configuration)|$(Platform)'=='Release|x64'">64</TargetMachinePlatform>
-    </CudaCompile>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
     <Import Project="$(QtMsBuild)\qt.targets" />
   </ImportGroup>
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.0.targets" />
     <Import Project="..\packages\glm.0.9.9.300\build\native\glm.targets" />
   </ImportGroup>
   <ProjectExtensions>

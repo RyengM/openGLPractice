@@ -10,6 +10,10 @@
 #include <headFiles/Smoke.h>
 #include <headFiles/Camera.h>
 
+#define SIMULATION_INIT 0
+#define SIMULATION_RUN 1
+#define SIMULATION_STOP 2
+
 class MyGLWidget : public QOpenGLWidget
 {
     Q_OBJECT
@@ -50,7 +54,7 @@ private:
 
     QTimer *timer;                      // timer, used for simulation updating
     float simulation_interval = 0.02f;
-    int simulation_condition = 0;           // record simulation condition, 0: initial, 1: run, 2: pause
+    int simulation_status = SIMULATION_INIT;           // record simulation condition, 0: initial, 1: run, 2: pause
 
     Ui::MyGLWidgetClass ui;
 };
