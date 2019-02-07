@@ -20,16 +20,27 @@ void Smoke::init()
     // set current context and start up glfunctions
     QOpenGLExtraFunctions *glf = QOpenGLContext::currentContext()->extraFunctions();
 
+    // bind vao first
     glf->glGenVertexArrays(1, &vao_);
-    glf->glGenBuffers(1, &vbo_);
-    
     glf->glBindVertexArray(vao_);
-    glf->glBindBuffer(GL_ARRAY_BUFFER, vbo_);
 
-    glf->glBufferData(GL_ARRAY_BUFFER, MAX_PARTICLES * sizeof(float) * 3, nullptr, GL_DYNAMIC_DRAW);
-
-    glf->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)nullptr);
+    // set vbo contains 4 vertices of the particles
+    glf->glGenBuffers(1, &vertex_buffer_);
+    glf->glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_);
+    glf->glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_buffer_data), vertex_buffer_data, GL_STATIC_DRAW);
+    glf->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
     glf->glEnableVertexAttribArray(0);
+
+    // set vbo for particle positions
+    glf->glGenBuffers(1, &particle_position_buffer_);
+    glf->glBindBuffer(GL_ARRAY_BUFFER, particle_position_buffer_);
+    glf->glBufferData(GL_ARRAY_BUFFER, MAX_PARTICLES * sizeof(float) * 3, nullptr, GL_DYNAMIC_DRAW);
+    glf->glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+    glf->glEnableVertexAttribArray(1);
+
+    // tell OPENGL features and grid of instances
+    glf->glVertexAttribDivisor(0, 0);   // always reuse the 4 same vertices -> 0
+    glf->glVertexAttribDivisor(1, 1);   // positions: one per quad -> 1
 
     shaderObject_.build("../assets/shaders/smoke.vert", "../assets/shaders/smoke.frag");
     shader_program_ = shaderObject_.get_shader_program();
@@ -68,16 +79,14 @@ void Smoke::render(Camera camera, int status)
         // record particle offset buffer
         for (int i = 0; i < MAX_PARTICLES; i++)
         {
-            particles_offset[i * 3] = particles[i].offset.x;
-            particles_offset[i * 3 + 1] = particles[i].offset.y;
-            particles_offset[i * 3 + 2] = particles[i].offset.z;
+            particles_position_[i * 3] = particles[i].offset.x;
+            particles_position_[i * 3 + 1] = particles[i].offset.y;
+            particles_position_[i * 3 + 2] = particles[i].offset.z;
         }
 
-        glf->glBindBuffer(GL_ARRAY_BUFFER, vbo_);
-        glf->glBufferData(GL_ARRAY_BUFFER, MAX_PARTICLES * sizeof(float) * 3, particles_offset, GL_DYNAMIC_DRAW);
+        glf->glBindBuffer(GL_ARRAY_BUFFER, particle_position_buffer_);
+        glf->glBufferData(GL_ARRAY_BUFFER, MAX_PARTICLES * sizeof(float) * 3, particles_position_, GL_DYNAMIC_DRAW);
     }
-
-   
 
     // display particle system
     shaderObject_.use();
@@ -95,11 +104,11 @@ void Smoke::render(Camera camera, int status)
 
     QOpenGLExtraFunctions *f = QOpenGLContext::currentContext()->extraFunctions();
 
-    shaderObject_.set_vec3("offset", particles->offset);
     shaderObject_.set_mat4("mvp", mvp);
 
     f->glBindVertexArray(vao_);
-    f->glDrawArrays(GL_POINTS, 0, render_count_);
+    f->glDrawArraysInstanced(GL_TRIANGLES, 0, 6, render_count_);
+    f->glBindVertexArray(0);
 }
 
 glm::vec3 Smoke::get_position()

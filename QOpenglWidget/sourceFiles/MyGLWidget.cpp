@@ -34,7 +34,7 @@ void MyGLWidget::initializeGL()
     smoke.init();
     camera = Camera(smoke.get_position());
     smoke.render(camera, simulation_status);
-    std::cout << "wtf" << std::endl;
+    std::cout << "OpenGL initialize ready..." << std::endl;
     //camera = Camera(quad.get_position());
 }
 
