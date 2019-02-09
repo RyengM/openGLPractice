@@ -1,9 +1,11 @@
+#define STB_IMAGE_IMPLEMENTATION
 #include <headFiles/Smoke.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <random>
 #include <iostream>
 #include <cmath>
+#include <stb_image.h>
 
 Smoke::Smoke()
 {
@@ -28,25 +30,54 @@ void Smoke::init()
     glf->glGenBuffers(1, &vertex_buffer_);
     glf->glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_);
     glf->glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_buffer_data), vertex_buffer_data, GL_STATIC_DRAW);
-    glf->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+    glf->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
     glf->glEnableVertexAttribArray(0);
+    glf->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    glf->glEnableVertexAttribArray(1);
 
     // set vbo for particle positions
     glf->glGenBuffers(1, &particle_position_buffer_);
     glf->glBindBuffer(GL_ARRAY_BUFFER, particle_position_buffer_);
     glf->glBufferData(GL_ARRAY_BUFFER, MAX_PARTICLES * sizeof(float) * 3, nullptr, GL_DYNAMIC_DRAW);
-    glf->glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-    glf->glEnableVertexAttribArray(1);
+    glf->glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glf->glEnableVertexAttribArray(2);
+    
 
     // tell OPENGL features and grid of instances
     glf->glVertexAttribDivisor(0, 0);   // always reuse the 4 same vertices -> 0
-    glf->glVertexAttribDivisor(1, 1);   // positions: one per quad -> 1
+    glf->glVertexAttribDivisor(1, 0);
+    glf->glVertexAttribDivisor(2, 1);   // positions: one per quad -> 1
 
+    // load and create texture
+    glf->glGenTextures(1, &texture_);
+    glf->glBindTexture(GL_TEXTURE_2D, texture_);
+    // Set our texture parameters
+    glf->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glf->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // Set texture filtering
+    glf->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glf->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // load texture
+    int x, y, n;
+    unsigned char* image_data = stbi_load("../assets/textures/smoke.png", &x, &y, &n, STBI_rgb_alpha);
+    if (!image_data)
+    {
+        std::cout << "failed to load texture" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    std::cout << x << " " << y << " " << n << std::endl;
+    glf->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
+    glf->glGenerateMipmap(GL_TEXTURE_2D);
+    glf->glBindTexture(GL_TEXTURE_2D, 0);
+    stbi_image_free(image_data);
+    
+
+    // build shader
     shaderObject_.build("../assets/shaders/smoke.vert", "../assets/shaders/smoke.frag");
     shader_program_ = shaderObject_.get_shader_program();
 
     shaderObject_.use();
-    
+
     // unbind
     glf->glBindBuffer(GL_ARRAY_BUFFER, 0);
     glf->glBindVertexArray(0);
@@ -56,6 +87,7 @@ void Smoke::render(Camera camera, int status)
 {
     QOpenGLExtraFunctions *glf = QOpenGLContext::currentContext()->extraFunctions();
 
+    // update particle condition
     if (status == SIMULATION_RUN) {
         // emit a particle per 20ms
         if (render_count_ < MAX_PARTICLES)
@@ -84,8 +116,14 @@ void Smoke::render(Camera camera, int status)
             particles_position_[i * 3 + 2] = particles[i].offset.z;
         }
 
+        // update position_buffer infomation
         glf->glBindBuffer(GL_ARRAY_BUFFER, particle_position_buffer_);
         glf->glBufferData(GL_ARRAY_BUFFER, MAX_PARTICLES * sizeof(float) * 3, particles_position_, GL_DYNAMIC_DRAW);
+
+        // active texture
+        glf->glActiveTexture(GL_TEXTURE0);
+        glf->glBindTexture(GL_TEXTURE_2D, texture_);
+        glf->glUniform1i(glf->glGetUniformLocation(shader_program_, "our_texture"), 0);
     }
 
     // display particle system
@@ -102,13 +140,19 @@ void Smoke::render(Camera camera, int status)
 
     glm::mat4 mvp = projection * view * model;
 
-    QOpenGLExtraFunctions *f = QOpenGLContext::currentContext()->extraFunctions();
+    // transfer camera data to shader
+    glm::vec3 unit_offset = camera.get_view_offset() / camera.get_view_distance();
+    glm::vec3 camera_up = glm::vec3(0, 1, 0);   // it is a temp camera_up
+    glm::vec3 camera_right = glm::cross(-unit_offset, camera_up);
+    camera_up = glm::cross(camera_right, -unit_offset);
 
     shaderObject_.set_mat4("mvp", mvp);
+    shaderObject_.set_vec3("camera_up", camera_up);
+    shaderObject_.set_vec3("camera_right", camera_right);
 
-    f->glBindVertexArray(vao_);
-    f->glDrawArraysInstanced(GL_TRIANGLES, 0, 6, render_count_);
-    f->glBindVertexArray(0);
+    glf->glBindVertexArray(vao_);
+    glf->glDrawArraysInstanced(GL_TRIANGLES, 0, 6, render_count_);
+    glf->glBindVertexArray(0);
 }
 
 glm::vec3 Smoke::get_position()

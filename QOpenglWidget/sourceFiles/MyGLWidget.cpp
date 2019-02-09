@@ -25,7 +25,7 @@ void MyGLWidget::initializeGL()
 
     std::cout << "initialize OPENGL" << std::endl;
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-    f->glClearColor(0.1, 0, 0, 1);
+    f->glClearColor(0, 0, 0, 1);
     f->glEnable(GL_DEPTH_TEST);
     // ready for quad rendering
     //quad = Quad();
@@ -36,6 +36,11 @@ void MyGLWidget::initializeGL()
     smoke.render(camera, simulation_status);
     std::cout << "OpenGL initialize ready..." << std::endl;
     //camera = Camera(quad.get_position());
+
+    // prepare basic opengl config
+    f->glEnable(GL_BLEND);
+    f->glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    f->glEnable(GL_DEPTH_TEST);
 }
 
 void MyGLWidget::paintGL()

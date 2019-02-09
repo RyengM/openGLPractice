@@ -18,14 +18,14 @@ typedef struct
     glm::vec3 velocity = glm::vec3(0.01,0,0);
 }Particles;
 
-// basic billboard unit
+// basic billboard unit: position.x, position.y, position.z, texture.x, texture.y
 static const GLfloat vertex_buffer_data[] = {
-    -0.05f, 0.05f, 0.0f,
-    0.05f, -0.05f, 0.0f,
-    -0.05f, -0.05f, 0.0f,
-    -0.05f, 0.05f, 0.0f,
-    0.05f, -0.05f, 0.0f,
-    0.05f, 0.05f, 0.0f
+    -0.05f, 0.05f, 0.0f, 0.0f, 1.0f,
+    0.05f, -0.05f, 0.0f, 1.0f, 0.0f,
+    -0.05f, -0.05f, 0.0f, 0.0f, 0.0f,
+    -0.05f, 0.05f, 0.0f, 0.0f, 1.0f,
+    0.05f, -0.05f, 0.0f, 1.0f, 0.0f,
+    0.05f, 0.05f, 0.0f, 1.0f, 1.0f
 };
 
 class Smoke : protected Object
@@ -53,6 +53,7 @@ private:
 
     GLuint vertex_buffer_;
     GLuint particle_position_buffer_;
+    GLuint texture_;
 
 };
 
