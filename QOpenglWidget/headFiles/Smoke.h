@@ -13,9 +13,8 @@ typedef struct
 {
     bool active = false;
     float life = 0;
-    float sign = 1.f;
     glm::vec3 offset = glm::vec3(0,0,0);
-    glm::vec3 velocity = glm::vec3(0.01,0,0);
+    glm::vec3 velocity = glm::vec3(0,0,0);
 }Particles;
 
 // basic billboard unit: position.x, position.y, position.z, texture.x, texture.y
@@ -27,6 +26,9 @@ static const GLfloat vertex_buffer_data[] = {
     0.05f, -0.05f, 0.0f, 1.0f, 0.0f,
     0.05f, 0.05f, 0.0f, 1.0f, 1.0f
 };
+
+static double perlin_grid[101][101][101];
+static glm::vec3 acceleration_grid[100][100][100];
 
 class Smoke : protected Object
 {
@@ -54,7 +56,6 @@ private:
     GLuint vertex_buffer_;
     GLuint particle_position_buffer_;
     GLuint texture_;
-
 };
 
 #endif // !SMOKE_H

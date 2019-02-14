@@ -69,6 +69,9 @@
     <ClCompile Include="sourceFiles\Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sourceFiles\perlin.cpp">
+      <Filter>Shader Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headFiles\ShaderObject.h">
@@ -87,6 +90,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headFiles\CUDAUtilities.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headFiles\perlin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

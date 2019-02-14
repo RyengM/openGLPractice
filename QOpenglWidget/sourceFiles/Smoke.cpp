@@ -1,5 +1,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <headFiles/Smoke.h>
+#include <headFiles/perlin.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <random>
@@ -9,7 +10,7 @@
 
 Smoke::Smoke()
 {
-
+    
 }
 
 Smoke::~Smoke()
@@ -19,6 +20,7 @@ Smoke::~Smoke()
 
 void Smoke::init()
 {
+    //////////// GL preparation
     // set current context and start up glfunctions
     QOpenGLExtraFunctions *glf = QOpenGLContext::currentContext()->extraFunctions();
 
@@ -81,6 +83,40 @@ void Smoke::init()
     // unbind
     glf->glBindBuffer(GL_ARRAY_BUFFER, 0);
     glf->glBindVertexArray(0);
+
+    //////////// create perlin_noise-based pressure net
+    Perlin myPerlin = Perlin();
+    // calculate each grid's perlin value
+    for (double i = 0; i < 101; i++)
+        for (double j = 0; j < 101; j++)
+            for (double k = 0; k < 101; k++)
+                perlin_grid[(int)i][(int)j][(int)k] = myPerlin.perlin(i + 0.5, j + 0.5, k + 0.5);
+    // calculate each grid's acceleration
+    for (int i = 1; i < 100; i++)
+        for (int j = 1; j < 100; j++)
+            for (int k = 1; k < 100; k++)
+            {
+                if (perlin_grid[i][j][k] - perlin_grid[i + 1][j][k] > perlin_grid[i][j][k] - perlin_grid[i - 1][j][k])
+                    acceleration_grid[i][j][k].x = (perlin_grid[i][j][k] - perlin_grid[i + 1][j][k]) / 100;
+                else 
+                    acceleration_grid[i][j][k].x = (perlin_grid[i - 1][j][k] - perlin_grid[i][j][k]) / 100;
+                if (perlin_grid[i][j][k] - perlin_grid[i][j + 1][k] > perlin_grid[i][j][k] - perlin_grid[i][j - 1][k])
+                    acceleration_grid[i][j][k].y = (perlin_grid[i][j][k] - perlin_grid[i][j + 1][k]) / 100;
+                else 
+                    acceleration_grid[i][j][k].y = (perlin_grid[i][j - 1][k] - perlin_grid[i][j][k]) / 100;
+                if (perlin_grid[i][j][k] - perlin_grid[i][j][k + 1] > perlin_grid[i][j][k] - perlin_grid[i][j][k - 1])
+                    acceleration_grid[i][j][k].z = (perlin_grid[i][j][k] - perlin_grid[i][j][k + 1]) / 100;
+                else
+                    acceleration_grid[i][j][k].z = (perlin_grid[i][j][k - 1] - perlin_grid[i][j][k]) / 100;
+            }
+    // set initial speed for each particle
+    /*for (int i = 0; i < MAX_PARTICLES; i++)
+    {
+        double random1 = double(qrand() % 1000);
+        double random2 = double(qrand() % 1000);
+        double random3 = double(qrand() % 1000);
+        particles[i].velocity = glm::vec3((double)i / random1 * ((int)random1%2==0?1:-1), (double)i / random2* ((int)random2 % 2 == 0 ? 1 : -1), (double)i / random3* ((int)random3 % 2 == 0 ? 1 : -1));
+    }*/
 }
 
 void Smoke::render(Camera camera, int status)
@@ -97,15 +133,10 @@ void Smoke::render(Camera camera, int status)
         {
             if (particles[i].active)
             {
-                float random = float(qrand() % 10) / 500.f * particles[i].sign;
-                particles[i].offset.x += random;
-                random = float(qrand() % 10) / 500.f * particles[i].sign;
-                particles[i].offset.y += random;
-                random = float(qrand() % 10) / 500.f * particles[i].sign;
-                particles[i].offset.z += random;
-                // restrian the scope particles can move
+                particles[i].velocity += acceleration_grid[(int)(abs(particles[i].offset.x) * 100)%99 + 1][(int)(abs(particles[i].offset.y) * 100)%99 +1][(int)(abs(particles[i].offset.z) * 100)%99 +1];
+                particles[i].offset += particles[i].velocity;
                 if (sqrt(pow(particles[i].offset.x, 2) + pow(particles[i].offset.y, 2) + pow(particles[i].offset.z, 2)) > 2)
-                    particles[i].sign = -particles[i].sign;
+                    particles[i].velocity = -particles[i].velocity;
             }
         }
         // record particle offset buffer
