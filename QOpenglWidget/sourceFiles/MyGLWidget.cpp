@@ -30,6 +30,9 @@ void MyGLWidget::initializeGL()
     // ready for quad rendering
     //quad = Quad();
     //quad.build_render_config();
+    //camera = Camera(quad.get_position());
+    //quad.render(camera);
+
     smoke = Smoke();
     smoke.init();
     camera = Camera(smoke.get_position());
@@ -47,8 +50,8 @@ void MyGLWidget::paintGL()
 {
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     
-    //quad.render(camera);
     f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //quad.render(camera);
     smoke.render(camera, simulation_status);
 }
 

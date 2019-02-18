@@ -44,7 +44,6 @@ void Smoke::init()
     glf->glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glf->glEnableVertexAttribArray(2);
     
-
     // tell OPENGL features and grid of instances
     glf->glVertexAttribDivisor(0, 0);   // always reuse the 4 same vertices -> 0
     glf->glVertexAttribDivisor(1, 0);
@@ -67,13 +66,11 @@ void Smoke::init()
         std::cout << "failed to load texture" << std::endl;
         exit(EXIT_FAILURE);
     }
-    std::cout << x << " " << y << " " << n << std::endl;
     glf->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
     glf->glGenerateMipmap(GL_TEXTURE_2D);
     glf->glBindTexture(GL_TEXTURE_2D, 0);
     stbi_image_free(image_data);
     
-
     // build shader
     shaderObject_.build("../assets/shaders/smoke.vert", "../assets/shaders/smoke.frag");
     shader_program_ = shaderObject_.get_shader_program();
@@ -113,7 +110,7 @@ void Smoke::init()
     for (int i = 0; i < MAX_PARTICLES; i++)
     {
         double random = double(qrand() % 1000);
-        particles[i].velocity = glm::vec3(random, 0,0);
+        particles[i].velocity = glm::vec3(random, 0, 0);
     }
 }
 
@@ -132,8 +129,8 @@ void Smoke::render(Camera camera, int status)
             if (particles[i].active)
             {
                 particles[i].velocity += acceleration_grid[(int)(abs(particles[i].offset.x) * 100)%99 + 1][(int)(abs(particles[i].offset.y) * 100)%99 +1][(int)(abs(particles[i].offset.z) * 100)%99 +1];
-                particles[i].velocity = particles[i].velocity / sqrt(pow(particles[i].velocity.x, 2) + pow(particles[i].velocity.y, 2) + pow(particles[i].velocity.z, 2));
-                particles[i].offset += particles[i].velocity / glm::vec3(10,10,10);
+                particles[i].velocity = normalize(particles[i].velocity);
+                particles[i].offset += particles[i].velocity / glm::vec3(30,30,30);
                 if (sqrt(pow(particles[i].offset.x, 2) + pow(particles[i].offset.y, 2) + pow(particles[i].offset.z, 2)) > 20)
                 {
                     particles[i].active = false;
@@ -183,11 +180,8 @@ void Smoke::render(Camera camera, int status)
     // transfer camera data to shader
     glm::vec3 unit_offset = camera.get_view_offset() / camera.get_view_distance();
     glm::vec3 camera_up = glm::vec3(0, 1, 0);   // it is a temp camera_up
-    glm::vec3 camera_right = glm::cross(-unit_offset, camera_up);
-    camera_right = camera_right / sqrt(pow(camera_right.x,2) + pow(camera_right.y,2) + pow(camera_right.z, 2));
-    camera_up = glm::cross(camera_right, -unit_offset);
-    camera_up = camera_up / sqrt(pow(camera_up.x, 2) + pow(camera_up.y, 2) + pow(camera_up.z, 2));
-
+    glm::vec3 camera_right = normalize(glm::cross(-unit_offset, camera_up));
+    camera_up = normalize(glm::cross(camera_right, -unit_offset));
 
     shaderObject_.set_mat4("mvp", mvp);
     shaderObject_.set_vec3("camera_up", camera_up);

@@ -19,12 +19,12 @@ typedef struct
 
 // basic billboard unit: position.x, position.y, position.z, texture.x, texture.y
 static const GLfloat vertex_buffer_data[] = {
-    -0.05f, 0.05f, 0.0f, 0.0f, 1.0f,
-    0.05f, -0.05f, 0.0f, 1.0f, 0.0f,
-    -0.05f, -0.05f, 0.0f, 0.0f, 0.0f,
-    -0.05f, 0.05f, 0.0f, 0.0f, 1.0f,
-    0.05f, -0.05f, 0.0f, 1.0f, 0.0f,
-    0.05f, 0.05f, 0.0f, 1.0f, 1.0f
+    -0.1f, 0.1f, 0.0f, 0.0f, 1.0f,
+    0.1f, -0.1f, 0.0f, 1.0f, 0.0f,
+    -0.1f, -0.1f, 0.0f, 0.0f, 0.0f,
+    -0.1f, 0.1f, 0.0f, 0.0f, 1.0f,
+    0.1f, -0.1f, 0.0f, 1.0f, 0.0f,
+    0.1f, 0.1f, 0.0f, 1.0f, 1.0f
 };
 
 static double perlin_grid[101][101][101];

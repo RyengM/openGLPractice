@@ -54,7 +54,7 @@ void Quad::render(Camera camera)
     glm::mat4 view(1.0f);
     glm::mat4 projection;
 
-    model = glm::rotate(model, glm::radians(-5.f * render_count_++), glm::vec3(1.0f, 0.0f, 0.0f));
+    model = glm::rotate(model, glm::radians(-5.f), glm::vec3(1.0f, 0.0f, 0.0f));
     view = glm::lookAt(camera.get_view_offset() + position, position, glm::vec3(0.f, 0.f, -1.f));
     projection = glm::perspective(glm::radians(camera.get_fovy()), 1920.f / 1080.f, 0.1f, 1000.0f);
 
