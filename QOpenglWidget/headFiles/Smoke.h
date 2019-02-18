@@ -3,7 +3,7 @@
 
 #include <headFiles/Object.h>
 
-#define MAX_PARTICLES 1000
+#define MAX_PARTICLES 10000
 #define SIMULATION_INIT 0
 #define SIMULATION_RUN 1
 #define SIMULATION_STOP 2

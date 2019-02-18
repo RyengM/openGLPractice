@@ -97,26 +97,24 @@ void Smoke::init()
             for (int k = 1; k < 100; k++)
             {
                 if (perlin_grid[i][j][k] - perlin_grid[i + 1][j][k] > perlin_grid[i][j][k] - perlin_grid[i - 1][j][k])
-                    acceleration_grid[i][j][k].x = (perlin_grid[i][j][k] - perlin_grid[i + 1][j][k]) / 100;
+                    acceleration_grid[i][j][k].x = (perlin_grid[i][j][k] - perlin_grid[i + 1][j][k]);
                 else 
-                    acceleration_grid[i][j][k].x = (perlin_grid[i - 1][j][k] - perlin_grid[i][j][k]) / 100;
+                    acceleration_grid[i][j][k].x = (perlin_grid[i - 1][j][k] - perlin_grid[i][j][k]);
                 if (perlin_grid[i][j][k] - perlin_grid[i][j + 1][k] > perlin_grid[i][j][k] - perlin_grid[i][j - 1][k])
-                    acceleration_grid[i][j][k].y = (perlin_grid[i][j][k] - perlin_grid[i][j + 1][k]) / 100;
+                    acceleration_grid[i][j][k].y = (perlin_grid[i][j][k] - perlin_grid[i][j + 1][k]);
                 else 
-                    acceleration_grid[i][j][k].y = (perlin_grid[i][j - 1][k] - perlin_grid[i][j][k]) / 100;
+                    acceleration_grid[i][j][k].y = (perlin_grid[i][j - 1][k] - perlin_grid[i][j][k]);
                 if (perlin_grid[i][j][k] - perlin_grid[i][j][k + 1] > perlin_grid[i][j][k] - perlin_grid[i][j][k - 1])
-                    acceleration_grid[i][j][k].z = (perlin_grid[i][j][k] - perlin_grid[i][j][k + 1]) / 100;
+                    acceleration_grid[i][j][k].z = (perlin_grid[i][j][k] - perlin_grid[i][j][k + 1]);
                 else
-                    acceleration_grid[i][j][k].z = (perlin_grid[i][j][k - 1] - perlin_grid[i][j][k]) / 100;
+                    acceleration_grid[i][j][k].z = (perlin_grid[i][j][k - 1] - perlin_grid[i][j][k]);
             }
     // set initial speed for each particle
-    /*for (int i = 0; i < MAX_PARTICLES; i++)
+    for (int i = 0; i < MAX_PARTICLES; i++)
     {
-        double random1 = double(qrand() % 1000);
-        double random2 = double(qrand() % 1000);
-        double random3 = double(qrand() % 1000);
-        particles[i].velocity = glm::vec3((double)i / random1 * ((int)random1%2==0?1:-1), (double)i / random2* ((int)random2 % 2 == 0 ? 1 : -1), (double)i / random3* ((int)random3 % 2 == 0 ? 1 : -1));
-    }*/
+        double random = double(qrand() % 1000);
+        particles[i].velocity = glm::vec3(random, 0,0);
+    }
 }
 
 void Smoke::render(Camera camera, int status)
@@ -134,9 +132,20 @@ void Smoke::render(Camera camera, int status)
             if (particles[i].active)
             {
                 particles[i].velocity += acceleration_grid[(int)(abs(particles[i].offset.x) * 100)%99 + 1][(int)(abs(particles[i].offset.y) * 100)%99 +1][(int)(abs(particles[i].offset.z) * 100)%99 +1];
-                particles[i].offset += particles[i].velocity;
-                if (sqrt(pow(particles[i].offset.x, 2) + pow(particles[i].offset.y, 2) + pow(particles[i].offset.z, 2)) > 2)
-                    particles[i].velocity = -particles[i].velocity;
+                particles[i].velocity = particles[i].velocity / sqrt(pow(particles[i].velocity.x, 2) + pow(particles[i].velocity.y, 2) + pow(particles[i].velocity.z, 2));
+                particles[i].offset += particles[i].velocity / glm::vec3(10,10,10);
+                if (sqrt(pow(particles[i].offset.x, 2) + pow(particles[i].offset.y, 2) + pow(particles[i].offset.z, 2)) > 20)
+                {
+                    particles[i].active = false;
+                    particles[i].offset = glm::vec3(0, 0, 0);
+                    double random = double(qrand() % 1000);
+                    particles[i].velocity = glm::vec3(random, 0, 0);
+                }
+            }
+            else
+            {
+                if (render_count_ > i)
+                    particles[i].active = true;
             }
         }
         // record particle offset buffer
@@ -175,7 +184,10 @@ void Smoke::render(Camera camera, int status)
     glm::vec3 unit_offset = camera.get_view_offset() / camera.get_view_distance();
     glm::vec3 camera_up = glm::vec3(0, 1, 0);   // it is a temp camera_up
     glm::vec3 camera_right = glm::cross(-unit_offset, camera_up);
+    camera_right = camera_right / sqrt(pow(camera_right.x,2) + pow(camera_right.y,2) + pow(camera_right.z, 2));
     camera_up = glm::cross(camera_right, -unit_offset);
+    camera_up = camera_up / sqrt(pow(camera_up.x, 2) + pow(camera_up.y, 2) + pow(camera_up.z, 2));
+
 
     shaderObject_.set_mat4("mvp", mvp);
     shaderObject_.set_vec3("camera_up", camera_up);
