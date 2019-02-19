@@ -27,18 +27,17 @@ void MyGLWidget::initializeGL()
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     f->glClearColor(0, 0, 0, 1);
     f->glEnable(GL_DEPTH_TEST);
-    // ready for quad rendering
-    //quad = Quad();
-    //quad.build_render_config();
-    //camera = Camera(quad.get_position());
-    //quad.render(camera);
 
     smoke = Smoke();
     smoke.init();
     camera = Camera(smoke.get_position());
     smoke.render(camera, simulation_status);
     std::cout << "OpenGL initialize ready..." << std::endl;
-    //camera = Camera(quad.get_position());
+
+    // ready for quad rendering
+    //quad = Quad();
+    //quad.build_render_config();
+    //quad.render(camera);
 
     // prepare basic opengl config
     f->glEnable(GL_BLEND);
@@ -51,8 +50,8 @@ void MyGLWidget::paintGL()
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     
     f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //quad.render(camera);
     smoke.render(camera, simulation_status);
+    //quad.render(camera);
 }
 
 void MyGLWidget::resizeGL(int w, int h)

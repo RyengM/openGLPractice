@@ -5,6 +5,9 @@
 
 #include <headFiles/ShaderObject.h>
 
+using namespace Widget;
+using namespace Shader;
+
 ShaderObject::ShaderObject(const std::string& vertex_shader_file, const std::string& fragment_shader_file)
 {
     build(vertex_shader_file, fragment_shader_file);

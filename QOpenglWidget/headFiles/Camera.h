@@ -3,6 +3,7 @@
 
 #include <glm/glm.hpp>
 
+#define STB_IMAGE_IMPLEMENTATION
 #define VIEW_CENTER_DEFAULT glm::vec3(0.f, 0.f, 0.f)
 #define VIEW_OFFSET_DEFAULT glm::vec3(10.f, 10.f, -10.f)
 #define ZOOM_SPEED 0.15f

@@ -1,7 +1,13 @@
 #version 330 core
 
+in vec2 texture_vert;
 out vec4 fragColor;
 
+uniform sampler2D texture_;
+
 void main() {
-	fragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+	vec4 color = texture(texture_, texture_vert);
+	if (color.a < 0.1)
+			discard;
+	fragColor = color;
 }

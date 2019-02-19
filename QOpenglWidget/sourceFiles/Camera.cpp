@@ -65,6 +65,7 @@ void Camera::rotate(float Phi, float Theta)
 
     auto offset = phi_quat * theta_quat * glm::vec3(distance, 0.f, 0.f);
     view_offset_ = glm::vec3(offset.x, offset.y, offset.z);
+    //std::cout << view_offset_.x << " " << view_offset_.y << " " << view_offset_.z << std::endl;
 }
 
 void Camera::zoom(float factor)

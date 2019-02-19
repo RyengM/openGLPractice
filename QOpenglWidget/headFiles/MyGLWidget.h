@@ -14,49 +14,55 @@
 #define SIMULATION_RUN 1
 #define SIMULATION_STOP 2
 
-class MyGLWidget : public QOpenGLWidget
+using namespace Widget;
+using namespace Object;
+
+namespace Widget
 {
-    Q_OBJECT
+    class MyGLWidget : public QOpenGLWidget
+    {
+        Q_OBJECT
 
-public:
-    MyGLWidget(QOpenGLWidget *parent = Q_NULLPTR);
-    ~MyGLWidget();
+    public:
+        MyGLWidget(QOpenGLWidget *parent = Q_NULLPTR);
+        ~MyGLWidget();
 
-    void drawAxis();
+        void drawAxis();
 
-protected:
-    // rewrite three necessary virtual functions
-    //////////////////////////////////////////////////////////////////////////////////////////////////////
-    // initializeGL for rendering context, loading shaders and other resources, etc.. only be invoked once
-    // paintGL for redrawing everything in the widget
-    // resizeGL for setting up the OPENGL viewport, projection, etc
-    //////////////////////////////////////////////////////////////////////////////////////////////////////
-    void initializeGL();
-    void paintGL();
-    void resizeGL(int w, int h);
+    protected:
+        // rewrite three necessary virtual functions
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        // initializeGL for rendering context, loading shaders and other resources, etc.. only be invoked once
+        // paintGL for redrawing everything in the widget
+        // resizeGL for setting up the OPENGL viewport, projection, etc
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        void initializeGL();
+        void paintGL();
+        void resizeGL(int w, int h);
 
-    void updateScene();
+        void updateScene();
 
-    // rewrite event handle functions
-    void keyPressEvent(QKeyEvent *event);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-    void wheelEvent(QWheelEvent *event);
+        // rewrite event handle functions
+        void keyPressEvent(QKeyEvent *event);
+        void mousePressEvent(QMouseEvent *event);
+        void mouseMoveEvent(QMouseEvent *event);
+        void mouseReleaseEvent(QMouseEvent *event);
+        void wheelEvent(QWheelEvent *event);
 
-private:
-    Quad quad;
-    Smoke smoke;
-    Camera camera;
+    private:
+        Quad quad;
+        Smoke smoke;
+        Camera camera;
 
-    glm::vec2 mouse_pos_last;           // the position of mouse on screen, including x and y
-    boolean mouse_press;                // signal whether mouse is pressed
+        glm::vec2 mouse_pos_last;           // the position of mouse on screen, including x and y
+        boolean mouse_press;                // signal whether mouse is pressed
 
-    QTimer *timer;                      // timer, used for simulation updating
-    float simulation_interval = 0.02f;
-    int simulation_status = SIMULATION_INIT;           // record simulation condition, 0: initial, 1: run, 2: pause
+        QTimer *timer;                      // timer, used for simulation updating
+        float simulation_interval = 0.02f;
+        int simulation_status = SIMULATION_INIT;           // record simulation condition, 0: initial, 1: run, 2: pause
 
-    Ui::MyGLWidgetClass ui;
-};
+        Ui::MyGLWidgetClass ui;
+    };
+}
 
 #endif // !My_GLWidget

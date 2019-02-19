@@ -66,9 +66,6 @@
     <ClCompile Include="sourceFiles\Smoke.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sourceFiles\Object.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="sourceFiles\perlin.cpp">
       <Filter>Shader Files</Filter>
     </ClCompile>
@@ -84,9 +81,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headFiles\Smoke.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="headFiles\Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headFiles\CUDAUtilities.hpp">

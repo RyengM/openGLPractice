@@ -1,4 +1,3 @@
-#define STB_IMAGE_IMPLEMENTATION
 #include <headFiles/Smoke.h>
 #include <headFiles/perlin.h>
 #include <glm/gtc/matrix_transform.hpp>
@@ -7,6 +6,9 @@
 #include <iostream>
 #include <cmath>
 #include <stb_image.h>
+
+using namespace Widget;
+using namespace Object;
 
 Smoke::Smoke()
 {
@@ -25,8 +27,8 @@ void Smoke::init()
     QOpenGLExtraFunctions *glf = QOpenGLContext::currentContext()->extraFunctions();
 
     // bind vao first
-    glf->glGenVertexArrays(1, &vao_);
-    glf->glBindVertexArray(vao_);
+    glf->glGenVertexArrays(1, &vao_smoke_);
+    glf->glBindVertexArray(vao_smoke_);
 
     // set vbo contains 4 vertices of the particles
     glf->glGenBuffers(1, &vertex_buffer_);
@@ -72,10 +74,10 @@ void Smoke::init()
     stbi_image_free(image_data);
     
     // build shader
-    shaderObject_.build("../assets/shaders/smoke.vert", "../assets/shaders/smoke.frag");
-    shader_program_ = shaderObject_.get_shader_program();
+    shader_smoke_ = Shader::ShaderObject("../assets/shaders/smoke.vert", "../assets/shaders/smoke.frag");
+    program_smoke_ = shader_smoke_.get_shader_program();
 
-    shaderObject_.use();
+    glf->glUseProgram(program_smoke_);
 
     // unbind
     glf->glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -107,11 +109,11 @@ void Smoke::init()
                     acceleration_grid[i][j][k].z = (perlin_grid[i][j][k - 1] - perlin_grid[i][j][k]);
             }
     // set initial speed for each particle
-    for (int i = 0; i < MAX_PARTICLES; i++)
+    /*for (int i = 0; i < MAX_PARTICLES; i++)
     {
         double random = double(qrand() % 1000);
         particles[i].velocity = glm::vec3(random, 0, 0);
-    }
+    }*/
 }
 
 void Smoke::render(Camera camera, int status)
@@ -160,11 +162,11 @@ void Smoke::render(Camera camera, int status)
         // active texture
         glf->glActiveTexture(GL_TEXTURE0);
         glf->glBindTexture(GL_TEXTURE_2D, texture_);
-        glf->glUniform1i(glf->glGetUniformLocation(shader_program_, "our_texture"), 0);
+        glf->glUniform1i(glf->glGetUniformLocation(program_smoke_, "our_texture"), 0);
     }
 
     // display particle system
-    shaderObject_.use();
+    glf->glUseProgram(program_smoke_);
 
     // MVP transform
     glm::mat4 model(1.0f);
@@ -183,11 +185,11 @@ void Smoke::render(Camera camera, int status)
     glm::vec3 camera_right = normalize(glm::cross(-unit_offset, camera_up));
     camera_up = normalize(glm::cross(camera_right, -unit_offset));
 
-    shaderObject_.set_mat4("mvp", mvp);
-    shaderObject_.set_vec3("camera_up", camera_up);
-    shaderObject_.set_vec3("camera_right", camera_right);
+    shader_smoke_.set_mat4("mvp", mvp);
+    shader_smoke_.set_vec3("camera_up", camera_up);
+    shader_smoke_.set_vec3("camera_right", camera_right);
 
-    glf->glBindVertexArray(vao_);
+    glf->glBindVertexArray(vao_smoke_);
     glf->glDrawArraysInstanced(GL_TRIANGLES, 0, 6, render_count_);
     glf->glBindVertexArray(0);
 }
